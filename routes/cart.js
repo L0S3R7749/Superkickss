@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/checkout',function(req,res,next){
-    res.render('index',{title:'',body: 'checkout'})
+  res.render('index',{title:'',body: 'checkout'})
 })
 
 module.exports = router;

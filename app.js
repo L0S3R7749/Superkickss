@@ -10,6 +10,12 @@ const aboutRouter = require('./routes/about');
 const shopRouter = require('./routes/shop');
 const contactRouter = require('./routes/contact');
 const cartRouter = require('./routes/cart');
+const checkoutRouter = require('./routes/checkout');
+const loginRouter = require('./routes/login');
+const signupRouter = require('./routes/signup');
+const thankyouRoter = require('./routes/thankyou');
+const detailRouter = require('./routes/detail');
+const forgotpasswordRouter = require('./routes/forgotpassword');
 
 const app = express();
 
@@ -29,6 +35,12 @@ app.use('/shop',shopRouter);
 app.use('/contact',contactRouter);
 app.use('/cart',cartRouter);
 app.use('/users', usersRouter);
+app.use('/checkout',checkoutRouter);
+app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
+app.use('/thankyou',thankyouRoter);
+app.use('/detail', detailRouter);
+app.use('/forgotpassword',forgotpasswordRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
