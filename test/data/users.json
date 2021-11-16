@@ -1,0 +1,58 @@
+[
+    {
+        "_id": 1,
+        "fullname": "Big Dick",
+        "username": "bigdick",
+        "password": "123456",
+        "email": "bigdick@gmail.com",
+        "phoneNumber": "123456789",
+        "addresses": [
+            {
+                "address": "227 Nguyen Van Cu, p.4, q.5"
+            }
+        ],
+        "userRight": "user"
+    },
+    {
+        "_id": 2,
+        "fullname": "Small Dick",
+        "username": "smalldick",
+        "password": "123456",
+        "email": "smalldick@gmail.com",
+        "phoneNumber": "123456789",
+        "addresses": [
+            {
+                "address": "227 Nguyen Van Cu, p.4, q.5"
+            }
+        ],
+        "userRight": "user"
+    },
+    {
+        "_id": 3,
+        "fullname": "Cute Pussy",
+        "username": "cutepussy",
+        "password": "123456",
+        "email": "cutepussy@gmail.com",
+        "phoneNumber": "123456789",
+        "addresses": [
+            {
+                "address": "227 Nguyen Van Cu, p.4, q.5"
+            }
+        ],
+        "userRight": "user"
+    },
+    {
+        "_id": 4,
+        "fullname": "Lord of Cheems",
+        "username": "lord",
+        "password": "123456",
+        "email": "lord@gmail.com",
+        "phoneNumber": "123456789",
+        "addresses": [
+            {
+                "address": "227 Nguyen Van Cu, p.4, q.5"
+            }
+        ],
+        "userRight": "admin"
+    }
+]

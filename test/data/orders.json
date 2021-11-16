@@ -1,0 +1,92 @@
+[
+    {
+        "_id": 1,
+        "user": {
+            "_id": 2,
+            "fullname": "Small Dick",
+            "shippingAddress": "227 Nguyen Van Cu, p.4, q.5"
+        },
+        "status": "not checkout",
+        "acceptedDate": "",
+        "deliveryDate": "", 
+        "completedDate": "",
+        "paymentMethod": "",
+        "items": [
+            {
+                "itemId": 1,
+                "itemName": "Giày bóng rổ",
+                "itemSize": 42,
+                "itemThumbnail": "path/to/unknown",
+                "price": 90000,
+                "quantity": 3
+            }
+        ]
+    },
+    {
+        "_id": 2,
+        "user": {
+            "_id": 2,
+            "fullname": "Small Dick",
+            "shippingAddress": "227 Nguyen Van Cu, p.4, q.5"
+        },
+        "status": "not checkout",
+        "acceptedDate": "",
+        "deliveryDate": "", 
+        "completedDate": "",
+        "paymentMethod": "",
+        "items": [
+            {
+                "itemId": 1,
+                "itemName": "Giày bóng rổ",
+                "itemSize": 42,
+                "itemThumbnail": "path/to/unknown",
+                "price": 90000,
+                "quantity": 1
+            }
+        ]
+    },{
+        "_id": 3,
+        "user": {
+            "_id": 2,
+            "fullname": "Small Dick",
+            "shippingAddress": "227 Nguyen Van Cu, p.4, q.5"
+        },
+        "status": "not checkout",
+        "acceptedDate": "",
+        "deliveryDate": "", 
+        "completedDate": "",
+        "paymentMethod": "",
+        "items": [
+            {
+                "itemId": 1,
+                "itemName": "Giày bóng rổ",
+                "itemSize": 42,
+                "itemThumbnail": "path/to/unknown",
+                "price": 90000,
+                "quantity": 1
+            }
+        ]
+    },{
+        "_id": 4,
+        "user": {
+            "_id": 2,
+            "fullname": "Small Dick",
+            "shippingAddress": "227 Nguyen Van Cu, p.4, q.5"
+        },
+        "status": "not checkout",
+        "acceptedDate": "",
+        "deliveryDate": "", 
+        "completedDate": "",
+        "paymentMethod": "",
+        "items": [
+            {
+                "itemId": 1,
+                "itemName": "Giày bóng rổ",
+                "itemSize": 42,
+                "itemThumbnail": "path/to/unknown",
+                "price": 90000,
+                "quantity": 2
+            }
+        ]
+    }
+]
