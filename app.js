@@ -68,13 +68,13 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-
-
 // connect to database
-mongoose.connect(
-  process.env.DB_CONNECT,
-  { useUnifiedTopology: true, useNewUrlParser: true },
-  () => console.log("DB Connected")
-);
+mongoose
+  .connect(process.env.DB_CONNECT, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("DB connected"))
+  .catch((error) => console.log("Connection Error", error));
 
 module.exports = app;
