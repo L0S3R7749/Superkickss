@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/",aboutRouter);
-app.use("/",contactRouter);
+app.use("/about",aboutRouter);
+app.use("/contact",contactRouter);
 
 if (process.env.DEBUG) {
   const generate = require("./test/generate");
@@ -51,7 +51,11 @@ app.use(function (err, req, res, next) {
 
 
 
+<<<<<<< HEAD
 /*connect to database*/
+=======
+// connect to database
+>>>>>>> 2ac490048e4d299bc0c68dacd410be497b00b583
 mongoose.connect(
   process.env.DB_CONNECT,
   { useUnifiedTopology: true, useNewUrlParser: true },
