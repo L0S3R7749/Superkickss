@@ -24,8 +24,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/",aboutRouter);
-app.use("/",contactRouter);
+app.use("/about",aboutRouter);
+app.use("/contact",contactRouter);
 
 if (process.env.DEBUG) {
   const generate = require("./test/generate");
