@@ -4,14 +4,13 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const indexRouter = require("./component/homepage");
 const aboutRouter = require("./component/about");
 const contactRouter = require("./component/contact");
 
 const app = express();
-dotenv.config();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -52,11 +51,11 @@ app.use(function (err, req, res, next) {
 
 
 
-// connect to database
-// mongoose.connect(
-//   process.env.DB_CONNECT,
-//   { useUnifiedTopology: true, useNewUrlParser: true },
-//   () => console.log("DB Connected")
-// );
+/*connect to database*/
+mongoose.connect(
+  process.env.DB_CONNECT,
+  { useUnifiedTopology: true, useNewUrlParser: true },
+  () => console.log("DB Connected")
+);
 
 module.exports = app;
