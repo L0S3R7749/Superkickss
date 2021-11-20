@@ -4,7 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const indexRouter = require("./component/homepage");
 const aboutRouter = require("./component/about");
@@ -53,10 +53,10 @@ app.use(function (err, req, res, next) {
 
 
 // connect to database
-// mongoose.connect(
-//   process.env.DB_CONNECT,
-//   { useUnifiedTopology: true, useNewUrlParser: true },
-//   () => console.log("DB Connected")
-// );
+mongoose.connect(
+  process.env.DB_CONNECT,
+  { useUnifiedTopology: true, useNewUrlParser: true },
+  () => console.log("DB Connected")
+);
 
 module.exports = app;
