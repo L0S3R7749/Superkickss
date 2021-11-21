@@ -51,11 +51,7 @@ app.use(function (err, req, res, next) {
 
 
 
-<<<<<<< HEAD
-/*connect to database*/
-=======
 // connect to database
->>>>>>> 2ac490048e4d299bc0c68dacd410be497b00b583
 mongoose.connect(
   process.env.DB_CONNECT,
   { useUnifiedTopology: true, useNewUrlParser: true },
