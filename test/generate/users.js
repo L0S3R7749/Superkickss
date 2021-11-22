@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
     console.log("Starting generate...");
 
     const createAddresses = (maxAddrs = 5) => {
-      let addrs = Math.floor(Math.random() * maxAddrs);
+      let addrs = Math.floor(Math.random() * (maxAddrs - 1) + 1);
       return Array.from({ length: addrs }, () => {
         return {
           address: faker.address.streetAddress(),
@@ -23,8 +23,7 @@ router.get("/", async (req, res, next) => {
     const createUsers = (numUsers = 10) => {
       return Array.from({ length: numUsers }, () => {
         return {
-          _id: uuid4(),
-          fullName: faker.name.findName(),
+          fullname: faker.name.findName(),
           username: faker.internet.userName(),
           password: faker.internet.password(),
           email: faker.internet.email(),
@@ -35,8 +34,23 @@ router.get("/", async (req, res, next) => {
       });
     };
 
+    const createSuperUser = () => {
+      return {
+        fullname: faker.name.findName(),
+        username: "loser",
+        password: "123456",
+        email: faker.internet.email(),
+        phoneNumber: faker.phone.phoneNumberFormat(),
+        addresses: createAddresses(),
+        userRight: "admin",
+      };
+    };
+
     let fakeUsers = createUsers(10);
+    let superUser = createSuperUser();
     console.log(fakeUsers);
+    await User.insertMany(fakeUsers);
+    await new User(superUser).save();
   } catch (e) {
     console.log(e);
   }

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const faker = require("faker");
-const uuid4 = require("uuid4");
 
 const Product = require("../../models/schema/Product");
 const User = require("../../models/schema/User");
@@ -39,68 +38,78 @@ const createImages = () => {
 
 const createCategories = (array) => {
   // Pick random n elements
-  const num_categories = random(0, array.length);
+  const num_categories = random(1, array.length);
   const shuffled = array.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, num_categories);
+  const selected = shuffled.slice(0, num_categories);
+  return selected.map((item) => {
+    return { name: item };
+  });
 };
 
 const createTags = (array) => {
   const num_tags = random(0, array.length);
   const shuffled = array.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, num_tags);
+  const selected = shuffled.slice(0, num_tags);
+  return selected.map((item) => {
+    return { name: item };
+  });
 };
 
-const createComments = (min, max) => {
+const createComments = async (min, max) => {
   let num_cmts = random(min, max);
 
   let array = Array.from(Array(num_cmts).keys());
-
-  return array.map(async () => {
-    const count = await User.count();
-    const rand = Math.floor(Math.random() * count);
-    const result = await User.findOne().skip(rand);
-    return {
-      userId: result.id,
-      fullname: result.fullname,
-      content: faker.lorem.text,
-      createdTime: faker.date.past,
-    };
-  });
+  // promise.all to return a array of promise
+  return await Promise.all(
+    array.map(async () => {
+      const count = await User.count();
+      const rand = Math.floor(Math.random() * count);
+      const result = await User.findOne().skip(rand);
+      return {
+        userId: result.id,
+        fullname: result.fullname,
+        content: faker.lorem.text(),
+        createdTime: faker.date.past(),
+      };
+    })
+  );
 };
 
-const createProducts = (numProducts = 50) => {
-  return Array.from({ length: numProducts }, async () => {
-    try {
-      let comments = await createComments(0, 10);
-      return {
-        name: faker.commerce.productName(),
-        brand: faker.company.companyName(),
-        price: faker.commerce.price((min = 100), (max = 9999), (dec = 2)),
-        description: faker.commerce.productDescription(),
-        SKU: faker.vehicle.vin(), // Random for nothing
-        detail: createProductDetails(),
-        images: createImages(),
-        category: createCategories([
-          "Nam",
-          "Nữ",
-          "Đường phố",
-          "Thể thao",
-          "Hiện đại",
-        ]),
-        tags: createTags([
-          "Trending",
-          "Bán chạy",
-          "Yêu thích",
-          "Phù hợp",
-          "Thời trang",
-          "Nổi bật",
-        ]),
-        comments: comments,
-      };
-    } catch (e) {
-      console.log(e);
-    }    
-  });
+const createProducts = async (numProducts = 50) => {
+  return await Promise.all(
+    Array.from({ length: numProducts }, async () => {
+      try {
+        let comments = await createComments(0, 10);
+        return {
+          name: faker.commerce.productName(),
+          brand: faker.company.companyName(),
+          price: faker.commerce.price((min = 100), (max = 9999), (dec = 2)),
+          description: faker.commerce.productDescription(),
+          SKU: faker.vehicle.vin(), // Random for nothing
+          detail: createProductDetails(),
+          images: createImages(),
+          category: createCategories([
+            "Nam",
+            "Nữ",
+            "Đường phố",
+            "Thể thao",
+            "Hiện đại",
+          ]),
+          tags: createTags([
+            "Trending",
+            "Bán chạy",
+            "Yêu thích",
+            "Phù hợp",
+            "Thời trang",
+            "Nổi bật",
+          ]),
+          comments: comments,
+        };
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  );
 };
 
 router.get("/", async (req, res, next) => {
@@ -108,9 +117,9 @@ router.get("/", async (req, res, next) => {
     num_product = await Product.count({});
     // if (num_user !== 0) return res.redirect("/");
     console.log("Starting generate...");
-    let fakeProducts = await createProducts(1);
-    console.log(fakeProducts);
-    // await Product.insertMany(fakeProducts)
+    let fakeProducts = await createProducts(50);
+    // console.log(fakeProducts[0]);
+    await Product.insertMany(fakeProducts);
   } catch (e) {
     console.log(e);
   }
