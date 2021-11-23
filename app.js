@@ -11,7 +11,6 @@ const aboutRouter = require("./component/about");
 const contactRouter = require("./component/contact");
 
 const app = express();
-dotenv.config();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
