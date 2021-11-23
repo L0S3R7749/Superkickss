@@ -49,14 +49,10 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
-  category: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  category: {
+    type: String,
+    required: true,
+  },
   tags: [
     {
       name: {

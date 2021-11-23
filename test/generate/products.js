@@ -36,14 +36,9 @@ const createImages = () => {
   });
 };
 
-const createCategories = (array) => {
+const createCategory = (array) => {
   // Pick random n elements
-  const num_categories = random(1, array.length);
-  const shuffled = array.sort(() => 0.5 - Math.random());
-  const selected = shuffled.slice(0, num_categories);
-  return selected.map((item) => {
-    return { name: item };
-  });
+  return array[Math.floor(Math.random()*array.length)];
 };
 
 const createTags = (array) => {
@@ -86,9 +81,9 @@ const createProducts = async (numProducts = 50) => {
           price: faker.commerce.price((min = 100), (max = 9999), (dec = 2)),
           description: faker.commerce.productDescription(),
           SKU: faker.vehicle.vin(), // Random for nothing
-          detail: createProductDetails(),
+          details: createProductDetails(),
           images: createImages(),
-          category: createCategories([
+          category: createCategory([
             "Nam",
             "Nữ",
             "Đường phố",
@@ -117,9 +112,10 @@ router.get("/", async (req, res, next) => {
     num_product = await Product.count({});
     // if (num_user !== 0) return res.redirect("/");
     console.log("Starting generate...");
-    let fakeProducts = await createProducts(50);
+    let fakeProducts = await createProducts(20);
     // console.log(fakeProducts[0]);
-    await Product.insertMany(fakeProducts);
+    const result = await Product.insertMany(fakeProducts);
+    console.log(result);
   } catch (e) {
     console.log(e);
   }
