@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-    _id: {
-      type: Number,
-      required: true,
-    },
     user: {
       _id: {
         type: String,
@@ -24,7 +20,7 @@ const orderSchema = new mongoose.Schema({
       enum: ["not checkout", "in progress", "shipping", "completed"],
       default: "not checkout",
     },
-    creaetedDate: {
+    createdDate: {
       type: Date,
       default: Date.now,
     },

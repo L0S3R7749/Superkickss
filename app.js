@@ -23,12 +23,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/about",aboutRouter);
-app.use("/contact",contactRouter);
+app.use("/about", aboutRouter);
+app.use("/contact", contactRouter);
 
 if (process.env.DEBUG) {
   const generate = require("./test/generate");
-  app.use("/upload", generate);
+  app.use("/generate-fake-data", generate);
 } else {
   console.log("no debug mode");
 }
@@ -49,13 +49,13 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-
-
 // connect to database
-mongoose.connect(
-  process.env.DB_CONNECT,
-  { useUnifiedTopology: true, useNewUrlParser: true },
-  () => console.log("DB Connected")
-);
+mongoose
+  .connect(process.env.DB_CONNECT, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("DB connected"))
+  .catch((error) => console.log("Connection Error", error));
 
 module.exports = app;
