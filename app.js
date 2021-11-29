@@ -12,7 +12,6 @@ const contactRouter = require("./component/contact");
 const shopRouter = require("./component/product")
 
 const app = express();
-dotenv.config();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -31,7 +30,7 @@ app.use("/product", shopRouter);
 
 if (process.env.DEBUG) {
   const generate = require("./test/generate");
-  app.use("/upload", generate);
+  app.use("/generate-fake-data", generate);
 } else {
   console.log("no debug mode");
 }
@@ -52,13 +51,13 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-
-
 // connect to database
-mongoose.connect(
-  process.env.DB_CONNECT,
-  { useUnifiedTopology: true, useNewUrlParser: true },
-  () => console.log("DB Connected")
-);
+mongoose
+  .connect(process.env.DB_CONNECT, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("DB connected"))
+  .catch((error) => console.log("Connection Error", error));
 
 module.exports = app;

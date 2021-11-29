@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-13/css/all.min.css"
+        integrity="sha512-MdXcgiHaL1yFyNjJtThjw0XkwR8tcd1aDcewr+2/whtekkfCbr79HXBNVQB4x+cVZKwnVt1mm3fP1Amj0cGClw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="public/form-style/css/addform.css">
+
+</head>
+
+<body>
+    <div class="container wrapper">
+        <div class=" text-center mt-5 ">
+            <h1>Product</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card mt-2 mx-auto p-4 bg-light">
+                    <div class="card-body bg-light">
+                        <div class="container">
+                            <form id="contact-form" role="form">
+                                <div class="controls row">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-12 row mb-3">
+                                            <div class="form-group">
+                                                <label for="form_lastname">Product Name <span
+                                                        class="require">*</span></label>
+                                                <input id="form_lastname" type="text" name="surname"
+                                                    class="form-control" placeholder="Enter product name"
+                                                    required="required" data-error="Lastname is required.">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 row mb-3">
+                                            <div class="col-md-6 mb-3">
+                                                <div class="form-group">
+                                                    <label for="form_email">Brand <span class="require">*</span></label>
+                                                    <input id="form_email" type="email" name="email"
+                                                        class="form-control" placeholder="Enter brand"
+                                                        required="required" data-error="Valid email is required.">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <div class="form-group">
+                                                    <label for="form_need">Price <span class="require">*</span></label>
+                                                    <input id="form_need" type="price" name="price" class="form-control"
+                                                        placeholder="Enter price" required="required"
+                                                        data-error="Please specify your need.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 row mb-3">
+                                            <div class="form-group">
+                                                <label for="form_category">Category <span
+                                                        class="require">*</span></label>
+                                                <div>
+                                                    <label for="form_category_gender" class="category_group">Gender:
+                                                        </span></label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="genderGroup"
+                                                            id="maleRadio" value="male">
+                                                        <label class="form-check-label" for="maleRadio">Male</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="genderGroup"
+                                                            id="femaleRadio" value="female">
+                                                        <label class="form-check-label" for="femaleRadio">Female</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="genderGroup"
+                                                            id="bothGenderRadio" value="bothGender">
+                                                        <label class="form-check-label"
+                                                            for="bothGenderRadio">Both</label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label for="form_category_gender"
+                                                        class="category_group">Type</label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="otherGroup"
+                                                            id="sportRadio" value="sport">
+                                                        <label class="form-check-label" for="sportRadio">Sport</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="otherGroup"
+                                                            id="casualRadio" value="casual">
+                                                        <label class="form-check-label" for="casualRadio">Casual</label>
+                                                    </div>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="otherGroup"
+                                                            id="bothRadio" value="sport">
+                                                        <label class="form-check-label" for="bothRadio">Both</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 row mb-3">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="form_email">Details<span
+                                                            class="require">*</span></label>
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="form">Size</label>
+                                                                <input id="size" type="text" name="size"
+                                                                    class="form-control" placeholder="Enter size"
+                                                                    data-error="Valid email is required.">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="form">Quantity</label>
+                                                                <input id="quantity" type="text" name="quantity"
+                                                                    class="form-control" placeholder="Enter quantity"
+                                                                    data-error="Please specify your need.">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 button-add">
+                                                            <button type="button" class="btn btn-primary btn-add-detail"
+                                                                onCLick="onAddDetail()"><i
+                                                                    class="fas fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <table class="col-md-12 detail-table" id="detail-table">
+                                                        <thead class="col-5">
+                                                            <tr class="row">
+                                                                <th class="col-5">Size</th>
+                                                                <th class="col-5">Quantity</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="detail-value">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="form">Image</label>
+                                            <br>
+                                            <div class="col-lg-12 img-list">
+                                                <div class="big-img">
+                                                </div>
+                                                <div class="img-items">
+                                                    <div class="single-img"></div>
+                                                    <div class="single-img"></div>
+                                                    <div class="single-img"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"> <input type="submit"
+                                        class="btn btn-success btn-send pt-2 btn-block " value="Add product">
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- /.8 -->
+        </div> <!-- /.row-->
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+        integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function onAddDetail() {
+            const size = document.getElementById('size').value;
+            const quantity = document.getElementById('quantity').value;
+            // const detailValue=document.getElementById('detail-value');
+            const detailValue = document.querySelector('tbody');
+            detailValue.innerHTML += `
+                <tr class="row">
+                    <td class="col-5">${size}</td>
+                    <td class="col-5">${quantity}</td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+
+</html>
