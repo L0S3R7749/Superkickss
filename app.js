@@ -8,7 +8,6 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-
 const indexRouter = require("./component/homepage");
 const aboutRouter = require("./component/about");
 const contactRouter = require("./component/contact");
