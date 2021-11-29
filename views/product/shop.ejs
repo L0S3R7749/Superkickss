@@ -10,6 +10,49 @@
 <div class="site-section">
   <div class="container">
     <div class="row mb-5">
+      <div class="col-md-3 order-1 mb-5 mb-md-0">
+        <div class="border p-4 rounded mb-4">
+          <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
+          <ul class="list-unstyled mb-0">
+            <form>
+              <div class="gender">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="maleRadio" value="option1">
+                  <label class="form-check-label" for="maleRadio">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="femaleRadio" value="option2">
+                  <label class="form-check-label" for="femaleRadio">Female</label>
+                </div>
+              </div>
+              <div class="type">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="typeRadio" id="sportRadio" value="option1">
+                  <label class="form-check-label" for="sportRadio">Sport</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="typeRadio" id="casualRadio" value="option2">
+                  <label class="form-check-label" for="casualRadio">Casual</label>
+                </div>
+              </div>
+              <div>
+                <button type="button" class="btn btn-secondary mt-2">Filter</button>
+              </div>
+            </form>
+          </ul>
+        </div>
+
+        <div class="border p-4 rounded mb-4">
+          <div class="mb-4">
+            <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
+            <div id="slider-range" class="border-primary"></div>
+            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
+            <div>
+              <button type="button" class="btn btn-secondary mt-2">Filter</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-md-9 order-2">
         <div class="row">
           <div class="col-md-12 mb-5">
@@ -49,169 +92,119 @@
 
           <%- include('_show')%>
 
-          </div>
-          <div class="row" data-aos="fade-up">
-            <div class="col-md-12 text-center">
-              <div class="site-block-27">
-                <ul>
-                  <!-- FIRST ITEM -->
-                  <% if(current == 1) { %>
-                    <li class="disabled">
-                        <a href="#">FIRST</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#">&lt;</a>
-                    </li>
-                    <% } else { %>
-                    <li>
-                        <a href="/product?page=1">FIRST</a>
-                    </li>
-                    <li>
-                        <a href="/product?page=<%= Number(current)-Number(1)%>">&lt;</a>
-                    </li>
-                    <% } %>
-
-                    <!-- ITEMS  -->
-                    <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
-                        <% if(i !== 1) { %>
-                        <li class="disabled">
-                            <a href="#">...</a>
-                        </li>
-                        <% } %>
-                        <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
-                        <% if(i == current) { %>
-                        <li class="disabled">
-                            <a href="#"><%= i %></a>
-                        </li>
-                        <% } else { %>
-                        <li >
-                            <a href="/product?page=<%= i %>"><%= i %></a>
-                        </li>
-                        <% } %>
-                        <% if (i == Number(current) + 2 && i < pages) { %>
-                        <li class="disabled">
-                            <a href="#">...</a>
-                        </li>
-                        <% } %>
-                        <% } %>
-
-                        <!-- LAST ITEM -->
-                        <% if(current == pages) { %>
-                        <li class="disabled">
-                            <a href="#">
-                                <span>&gt;</span>
-                            </a>
-                        </li>
-                        <li class="disabled">
-                            <a href="#">LAST</a>
-                        </li>
-                        <% } else { %>
-                        <li class="disabled">
-                            <a href="/product?page=<%= Number(current)+1%>">&gt;</a>
-                        </li>
-                        <li>
-                            <a href="/product?page=<%= pages %>">LAST</a>
-                        </li>
-                        <% } %>
-                  <!--li><a href="#">&lt;</a></li>
-                  <li class="active"><span>1</span></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li><a href="#">&gt;</a></li-->
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+        <div class="row" data-aos="fade-up">
+          <div class="col-md-12 text-center">
+            <div class="site-block-27">
+              <ul>
+                <!-- FIRST ITEM -->
+                <% if(current == 1) { %>
+                <li class="disabled">
+                  <a href="#">FIRST</a>
+                </li>
+                <li class="disabled">
+                  <a href="#">&lt;</a>
+                </li>
+                <% } else { %>
+                <li>
+                  <a href="/product?page=1">FIRST</a>
+                </li>
+                <li>
+                  <a href="/product?page=<%= Number(current)-Number(1)%>">&lt;</a>
+                </li>
+                <% } %>
 
-      <div class="col-md-3 order-1 mb-5 mb-md-0">
-        <div class="border p-4 rounded mb-4">
-          <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
-          <ul class="list-unstyled mb-0">
-            <form>
-              <div class="gender">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="genderRadio" id="maleRadio"
-                    value="option1">
-                  <label class="form-check-label" for="maleRadio">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="genderRadio" id="femaleRadio"
-                    value="option2">
-                  <label class="form-check-label" for="femaleRadio">Female</label>
-                </div>
-              </div>
-              <div class="type">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="typeRadio" id="sportRadio"
-                    value="option1">
-                  <label class="form-check-label" for="sportRadio">Sport</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="typeRadio" id="casualRadio"
-                    value="option2">
-                  <label class="form-check-label" for="casualRadio">Casual</label>
-                </div>
-              </div>
-              <div >
-                <button type="button" class="btn btn-secondary mt-2">Filter</button>
-              </div>
-            </form>
-          </ul>
-        </div>
+                <!-- ITEMS  -->
+                <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+                <% if(i !== 1) { %>
+                <li class="disabled">
+                  <a href="#">...</a>
+                </li>
+                <% } %>
+                <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
+                <% if(i == current) { %>
+                <li class="disabled">
+                  <a href="#"><%= i %></a>
+                </li>
+                <% } else { %>
+                <li>
+                  <a href="/product?page=<%= i %>"><%= i %></a>
+                </li>
+                <% } %>
+                <% if (i == Number(current) + 2 && i < pages) { %>
+                <li class="disabled">
+                  <a href="#">...</a>
+                </li>
+                <% } %>
+                <% } %>
 
-        <div class="border p-4 rounded mb-4">
-          <div class="mb-4">
-            <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
-            <div id="slider-range" class="border-primary"></div>
-            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled=""/>
-            <div>
-              <button type="button" class="btn btn-secondary mt-2">Filter</button>
+                <!-- LAST ITEM -->
+                <% if(current == pages) { %>
+                <li class="disabled">
+                  <a href="#">
+                    <span>&gt;</span>
+                  </a>
+                </li>
+                <li class="disabled">
+                  <a href="#">LAST</a>
+                </li>
+                <% } else { %>
+                <li class="disabled">
+                  <a href="/product?page=<%= Number(current)+1%>">&gt;</a>
+                </li>
+                <li>
+                  <a href="/product?page=<%= pages %>">LAST</a>
+                </li>
+                <% } %>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="site-section site-blocks-2">
-          <div class="row justify-content-center text-center mb-5">
-            <div class="col-md-7 site-section-heading pt-4">
-              <h2>Categories</h2>
-            </div>
-          </div>
-          <div class="row" style='justify-content: space-around;'>
-            <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-              <a class="block-2-item" href="#">
-                <figure class="image">
-                  <img src="https://static-uc.olist.ng/upload/20191126/e09dzr7cg75.jpg" alt="" class="img-fluid">
-                </figure>
-                <div class="text">
-                  <span class="text-uppercase">Collections</span>
-                  <h3>Female</h3>
-                </div>
-              </a>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-              <a class="block-2-item" href="#">
-                <figure class="image">
-                  <img src="https://ae01.alicdn.com/kf/H3764ca3af33e4f5c8ec159609e3bacdcA/Vulcanized-Shoes-Male-Sneakers-2019-Fashion-Summer-Air-Mesh-Breathable-Wedges-Sneakers-For-Men-Plus-Size.jpg" alt="" class="img-fluid">
-                </figure>
-                <div class="text">
-                  <span class="text-uppercase">Collections</span>
-                  <h3>Male</h3>
-                </div>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
 
   </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="site-section site-blocks-2">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-md-7 site-section-heading pt-4">
+          <h2>Categories</h2>
+        </div>
+      </div>
+      <div class="row" style='justify-content: space-around;'>
+        <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+          <a class="block-2-item" href="#">
+            <figure class="image">
+              <img src="https://static-uc.olist.ng/upload/20191126/e09dzr7cg75.jpg" alt="" class="img-fluid">
+            </figure>
+            <div class="text">
+              <span class="text-uppercase">Collections</span>
+              <h3>Female</h3>
+            </div>
+          </a>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
+          <a class="block-2-item" href="#">
+            <figure class="image">
+              <img
+                src="https://ae01.alicdn.com/kf/H3764ca3af33e4f5c8ec159609e3bacdcA/Vulcanized-Shoes-Male-Sneakers-2019-Fashion-Summer-Air-Mesh-Breathable-Wedges-Sneakers-For-Men-Plus-Size.jpg"
+                alt="" class="img-fluid">
+            </figure>
+            <div class="text">
+              <span class="text-uppercase">Collections</span>
+              <h3>Male</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
 </div>
