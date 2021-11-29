@@ -8,10 +8,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const indexRouter = require("./component/homepage");
-const aboutRouter = require("./component/about");
-const contactRouter = require("./component/contact");
-const shopRouter = require("./component/product")
+const mainRoute = require('./component/mainRouter');
 
 const app = express();
 
@@ -26,10 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/about",aboutRouter);
-app.use("/contact",contactRouter);
-app.use("/product", shopRouter);
+app.use('/', mainRoute);
 
 if (process.env.DEBUG) {
   const generate = require("./test/generate");
