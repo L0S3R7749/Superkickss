@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const indexRouter = require("./component/homepage");
 const aboutRouter = require("./component/about");
 const contactRouter = require("./component/contact");
+const shopRouter = require("./component/product")
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/about",aboutRouter);
 app.use("/contact",contactRouter);
+app.use("/product", shopRouter);
 
 if (process.env.DEBUG) {
   const generate = require("./test/generate");
