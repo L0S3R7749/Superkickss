@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
 const controller = require('./contactController');
 /* GET home page. */
 
-router.get('/',controller.contact);
+router.use('/',controller);
 
 module.exports = router;
