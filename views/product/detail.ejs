@@ -16,8 +16,9 @@
           <h2 class="text-black"><%=product.name%></h2>
           <p class="mb-4"><%= product.description%></p>
           <p><strong class="text-primary h4">$<%=product.price%></strong></p>
-          <div class="mb-1 d-flex">
+          <div class="mb-1 d-flex mb-4">
             <form>
+              <h5>Size</h5>
               <select class="form-control form-select" id="psize">
                 <% for (let i = 0; i < product.details.length; i++) { %>
                   <option value="<%= product.details[i].size%>"><%= product.details[i].size%></option>
@@ -25,8 +26,9 @@
               </select>
           </form>
           </div>
-          <div class="mb-5">
-            <div class="input-group mb-3" style="max-width: 120px;">
+          <div class="mb-4">
+            <h5>Amount</h5>
+            <div class="input-group" style="max-width: 120px;">
             <div class="input-group-prepend">
               <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
             </div>

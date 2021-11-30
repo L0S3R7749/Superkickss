@@ -125,6 +125,50 @@
                   <% } %>
                 </ul>
                 <% } %>
+
+                <!-- ITEMS  -->
+                <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+                <% if(i !== 1) { %>
+                <li class="disabled">
+                  <a href="#">...</a>
+                </li>
+                <% } %>
+                <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
+                <% if(i == current) { %>
+                <li class="disabled active">
+                  <a href="#"><%= i %></a>
+                </li>
+                <% } else { %>
+                <li>
+                  <a href="/product?page=<%= i %>"><%= i %></a>
+                </li>
+                <% } %>
+                <% if (i == Number(current) + 2 && i < pages) { %>
+                <li class="disabled">
+                  <a href="#">...</a>
+                </li>
+                <% } %>
+                <% } %>
+
+                <!-- LAST ITEM -->
+                <% if(current == pages) { %>
+                <li class="disabled">
+                  <a href="#">
+                    <span>&gt;</span>
+                  </a>
+                </li>
+                <li class="disabled">
+                  <a href="#">LAST</a>
+                </li>
+                <% } else { %>
+                <li class="disabled">
+                  <a href="/product?page=<%= Number(current)+1%>">&gt;</a>
+                </li>
+                <li>
+                  <a href="/product?page=<%= pages %>">LAST</a>
+                </li>
+                <% } %>
+              </ul>
             </div>
           </div>
         </div>
