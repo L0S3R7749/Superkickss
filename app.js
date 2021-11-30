@@ -8,8 +8,6 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const mainRoute = require('./component/mainRouter');
-
 const app = express();
 
 // view engine setup
@@ -23,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+const mainRoute = require('./component/mainRouter');
 app.use('/', mainRoute);
 
 if (process.env.DEBUG) {
