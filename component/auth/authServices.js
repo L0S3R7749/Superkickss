@@ -1,4 +1,4 @@
-const User = require('../../models/schema/User');
+/*const User = require('../../models/schema/User');
 
 exports.findUser = (req, res) => {
     if (req.query.id) {
@@ -15,4 +15,4 @@ exports.findUser = (req, res) => {
     } else {
         User.findOne()
     }
-}
+}*/
