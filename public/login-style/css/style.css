@@ -191,3 +191,62 @@ h2 {
 .control--checkbox input:disabled:checked ~ .control__indicator {
   background-color: #7e0cf5;
   opacity: .2; }
+
+  
+.auth-background{
+  background-image: url('https://chicos.vn/wp-content/uploads/2019/07/9535199410_1885848294.jpg');
+  background-repeat: repeat;
+}
+
+.sign-up, .login{
+  height: 100vh;
+}
+
+.right-content,
+.left-content{
+  height:600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-content{
+  background-color: #dbe8ee;
+}
+
+.right-content{
+  background-color: #fff;
+  flex-direction: column;
+
+}
+
+.side-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-button{
+  padding: 1rem 2rem;
+  background-color: #fff;
+  display: inline-block;
+  border: 3px solid #ddd;
+  border-radius: 400px;
+}
+
+.sign-up-button:hover{
+  border: 3px solid #fff;
+  background-color: #dbe8ee;
+}
+
+.login-form{
+  width: 70%;
+  height: 70%;
+}
+
+.form-button{
+  width: 50%;
+  align-self: center;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+}
