@@ -4,26 +4,30 @@ const User = require('../models/schema/User');
 const bcrypt = require('bcrypt');
 
 passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.findOne({username: username}, function(err,user) {
-            if (err) {return done(err);}
+    async function(username, password, done) {
+        try {
+            const user = await User.findOne({username: username}).lean();
             if (!user) {
                 return done(null, false, {message : 'Incorrect username.'});
             }
-            if (!user.validPassword(password)) {
+            if (!validPassword(user, password)) {
                 return done(null, false, {message : 'Incorrect password.'});
             }
+            console.log(user);
             return done(null, user);
-        })
+        } catch (err) {
+            return done(err);
+        }
     }
 ));
 
-const validPassport = (user, password) => {
-    return bcrypt.compareSync(password, user.password);
+function validPassword(user, password) {
+    //return bcrypt.compareSync(password, user.password);
+    return user.password === password;
 };
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user._id);
 });
 
 passport.deserializeUser(function (id, done) {

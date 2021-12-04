@@ -1,6 +1,7 @@
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #fff; }
+  background-color: #fff;
+}
 
 p {
   color: #b3b3b3;
@@ -195,11 +196,13 @@ h2 {
   
 .auth-background{
   background-image: url('https://chicos.vn/wp-content/uploads/2019/07/9535199410_1885848294.jpg');
-  background-repeat: repeat;
+  background-size: cover;
+  background-repeat:   no-repeat;
+    background-position: center center;
 }
 
 .sign-up, .login{
-  height: 100vh;
+  height: 100%;
 }
 
 .right-content,

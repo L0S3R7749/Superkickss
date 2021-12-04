@@ -14,8 +14,12 @@
           <div class="col-6 col-md-4 order-3 order-md-3 text-right">
             <div class="site-top-icons">
               <ul>
-                <li><a href="/auth/login"><span class="icon icon-person"></span></a></li>
-                <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                <% if (locals.user) {%>
+                  <li><a href="/auth/info"><span class="icon icon-person"></span></a></li>
+                  <li><a href="/auth/logout"><span class="icon icon-sign-out"></span></a></li>
+                <% } else {%>
+                  <li><a href="/auth/login"><span class="icon icon-sign-in"></span></a></li>
+                <% } %>
                 <li>
                   <a href="/order/cart" class="site-cart">
                     <span class="icon icon-shopping_cart"></span>
