@@ -1096,3 +1096,9 @@ a:hover {
 .item-name{
   -webkit-line-clamp: 1;
 }
+
+.auth-background{
+  width: 100%;
+  height: 100vh;
+  background-image: url('https://chicos.vn/wp-content/uploads/2019/07/9535199410_1885848294.jpg');
+}
