@@ -4,7 +4,8 @@ exports.findUser = ({usernanmeFind, emailFind, phoneFind}) => {
     return User.findOne({$or: [
         {username: usernanmeFind},
         {email: emailFind},
-        {phoneNumber: phoneFind}
+        {phoneNumber: phoneFind},
+        {userRight: 'user'}
     ]});
 }
 
