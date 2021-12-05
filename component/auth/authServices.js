@@ -1,12 +1,18 @@
 const User = require('../../models/schema/User');
 
 exports.findUser = ({usernanmeFind, emailFind, phoneFind}) => {
-    return User.findOne({$or: [
-        {username: usernanmeFind},
-        {email: emailFind},
-        {phoneNumber: phoneFind},
-        {userRight: 'user'}
-    ]});
+    return User.findOne({
+        $and: [
+        {
+            $or: [
+            {username: usernanmeFind},
+            {email: emailFind},
+            {phoneNumber: phoneFind},
+            ]
+        },
+        {userRight: 'user'},
+        ]
+    });
 }
 
 exports.createUser = ({fullname, username, hashpassword, email, phone}) => {
