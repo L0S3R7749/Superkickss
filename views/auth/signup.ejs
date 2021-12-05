@@ -33,7 +33,15 @@
   
           <div class="col-lg-6 right-content">
             <h3 class="mb-3">Sign up</h3>
-            <form class="login-form">
+            <form class="login-form" method="post">
+              <% if (message) { %>
+                <div class="col=md-12 mb-3">
+                  <div class="error">
+                    <i class="fas fa-times-circle me-2"></i>
+                    <span><%= message%></span>
+                  </div>
+                </div>
+              <% } %>
               <div class="col-md-12 mb-3">
                 <input class="form-control" type="text" name="fullname" placeholder="Fullname" />
               </div>

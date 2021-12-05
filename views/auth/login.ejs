@@ -25,8 +25,16 @@
       <div class="row p-5 login">
         <div class="col-lg-6 right-content">
           <h3 class="mb-3">Log in</h3>
+            
           <form class="login-form" method="post">
-
+            <% if (message) { %>
+              <div class="col=md-12 mb-3">
+                <div class="error">
+                  <i class="fas fa-times-circle me-2"></i>
+                  <span><%= message%></span>
+                </div>
+              </div>
+            <% } %>
             <div class="col-md-12 mb-3 mt-5">
               <input class="form-control" type="text" name="username" placeholder="Username" />
             </div>

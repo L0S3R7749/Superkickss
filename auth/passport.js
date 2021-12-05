@@ -22,8 +22,8 @@ passport.use(new LocalStrategy(
 ));
 
 function validPassword(user, password) {
-    //return bcrypt.compareSync(password, user.password);
-    return user.password === password;
+    return bcrypt.compareSync(password, user.password);
+    //return user.password === password;
 };
 
 passport.serializeUser(function (user, done) {
