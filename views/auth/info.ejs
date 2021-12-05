@@ -15,29 +15,28 @@
                 <div class="col-md-8 pt-3 pl-5">
                     <div class="col-md-10 mb-2">
                         <label>Full name</label>
-                        <input class="form-control" type="text" name="fullname" placeholder="Fullname"
-                            disabled="true" />
+                        <input class="form-control" type="text" name="fullname" placeholder="Fullname" value='<%= user.fullname%>'/>
                     </div>
                     <div class="col-md-10 mb-2">
                         <label>User name</label>
                         <input class="form-control" type="text" name="username" placeholder="Username"
-                            disabled="true" />
+                            disabled="true" value='<%= user.username%>'/>
                     </div>
                     <div class="col-md-10 mb-2">
                         <label>Email</label>
-                        <input class="form-control" type="email" name="email" placeholder="Email" disabled="true" />
+                        <input class="form-control" type="email" name="email" placeholder="Email" disabled="true" value='<%= user.email%>'/>
                     </div>
                     <div class="col-md-10 mb-2">
                         <label>Phone</label>
-                        <input class="form-control" type="text" name="phone" placeholder="Phone" disabled="true" />
+                        <input class="form-control" type="text" name="phone" placeholder="Phone" disabled="true" value='<%= user.phoneNumber%>'/>
                     </div>
                     <div class="col-md-10 mb-2">
                         <label>Address</label>
-                        <input class="form-control" type="text" name="address" placeholder="Address" disabled="true" />
+                        <input class="form-control" type="text" name="address" placeholder="Address" value='<%= user.address%>'/>
                     </div>
                     <div class="col-md-10 mt-5 d-flex justify-content-between">
-                        <button type="submit" class="col-md-5 btn btn-primary">Edit userinfo</button>
-                        <a href="/auth/changepw" class="btn col-md-5 btn-primary">Change password</a>
+                        <button type="submit" class="col-md-5 btn btn-primary">Edit Info</button>
+                        <a href="/auth/changepw" class="btn col-md-5 btn-primary">Edit pass</a>
                         <!-- <button type="submit" class="col-md-5 btn btn-primary">Change password</button> -->
                     </div>
                 </div>
