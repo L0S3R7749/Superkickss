@@ -1097,8 +1097,16 @@ a:hover {
   -webkit-line-clamp: 1;
 }
 
-.auth-background{
+.user-info{
   width: 100%;
-  height: 100vh;
-  background-image: url('https://chicos.vn/wp-content/uploads/2019/07/9535199410_1885848294.jpg');
+  border: 1px solid #ccc;
+  box-shadow: 5px 10px 10px #ddd;
+  padding-bottom: 100px;
+}
+
+.user-info .user-avatar{
+  width: 250px;
+  height: 250px;
+  background-color: #fff000;
+  border-radius: 10px;
 }
