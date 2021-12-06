@@ -201,55 +201,87 @@ h2 {
     background-position: center center;
 }
 
-.sign-up, .login{
+.blue {
+  background-color: #1da1f2;
+}
+
+.white {
+  background-color: #FFFFFF;
+}
+
+@media (min-width: 992px) {
+  .login,
+  .register {
+    width: 960px !important;
+  }
+}
+
+.side-box {
+  padding: 20% 0;
   height: 100%;
 }
 
-.right-content,
-.left-content{
-  height:600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.side-box h3, .side-box p {
+  color: #FFFFFF !important;
 }
 
-.left-content{
-  background-color: #dbe8ee;
+.side-box .context {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
-.right-content{
-  background-color: #fff;
-  flex-direction: column;
-
+.side-box a {
+  max-width: 50%;
+  margin: auto;
+  padding: 0.5rem 2rem;
+  border-radius: 2rem;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
-.side-box{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.side-box a:hover {
+  background-color: #e82e1e;
+  color: white;
+  font-weight: 500;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
-.content-button{
-  padding: 1rem 2rem;
-  background-color: #fff;
-  display: inline-block;
-  border: 3px solid #ddd;
-  border-radius: 400px;
+.error{
+  border: 1px solid #f44336;
+  color: #f44336;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
 }
 
-.sign-up-button:hover{
-  border: 3px solid #fff;
-  background-color: #dbe8ee;
+.login-form,
+.register-form {
+  max-width: 75%;
 }
 
-.login-form{
-  width: 70%;
-  height: 70%;
+.login-form input[type=submit],
+.register-form input[type=submit] {
+  background-color: #1da1f2;
+  color: #FFFFFF;
+  border-radius: 10rem;
+  border: 1px solid #b3b3b3;
+  transition: all 0.3s;
 }
 
-.form-button{
-  width: 50%;
-  align-self: center;
-  border: 2px solid #ccc;
-  border-radius: 30px;
+.login-form input[type=submit]:hover,
+.register-form input[type=submit]:hover {
+  background-color: #e82e1e;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.login-form a,
+.register-form a {
+  color: #666;
+  font-size: 0.9rem;
 }

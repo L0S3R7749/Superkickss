@@ -18,60 +18,68 @@
     <title>login</title>
   </head>
   <body>
-  
-
     <div class="auth-background">
-      <div class="container">
-        <div class="row p-5 sign-up">
-          <div class="col-lg-6 left-content">
-            <div class="context text-center">
-              <h3 class="fw-bold">Already have an account?</h3>
-              <h6>Login now</h6>
-              <a class="content-button mt-3" href="/auth/login">Login now</a>
-            </div>
-          </div>
-  
-          <div class="col-lg-6 right-content">
-            <h3 class="mb-3">Sign up</h3>
-            <form class="login-form" method="post">
-              <% if (message) { %>
-                <div class="col=md-12 mb-3">
-                  <div class="error">
-                    <i class="fas fa-times-circle me-2"></i>
-                    <span><%= message%></span>
-                  </div>
+      <div class="register container mt-5 mb-5 shadow-lg">
+        <div class="row py-5">
+            <div class="col-lg-6 blue">
+                <div class="side-box">
+                    <div class="context text-center">
+                        <h3 class="pb-3 fw-bold">Already have an account?</h3>
+                        <p class="pb-4">Join us now</p>
+                        <a href="/auth/login">Login Now</a>
+                    </div>
                 </div>
-              <% } %>
-              <div class="col-md-12 mb-3">
-                <input class="form-control" type="text" name="fullname" placeholder="Fullname" />
-              </div>
-              <div class="col-md-12 mb-3">
-                <input class="form-control" type="text" name="username" placeholder="Username" />
-              </div>
-              <div class="col-md-12 mb-3">
-                <input class="form-control" type="password" name="password" placeholder="Password" />
-              </div>
-              <div class="col-md-12 mb-3">
-                <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm password"/>
-              </div>
-              <div class="col-md-12 mb-3">
-                <input class="form-control" type="email" name="email" placeholder="Email"/>
-              </div>
-              <div class="col-md-12 mb-3">
-                <input class="form-control" type="text" name="phone" placeholder="Phone"/>
-              </div>
-              <div class="col-md-12 mb-3 ml-4">
-                <label class="form-check-label" htmlFor="keep-logged">
-                  <input class="form-check-input " type="checkbox" id="keep-logged" />
-                  Keep me logged in
-                </label>
-              </div>
-              <div class="col-md-12 mb-3 text-center d-flex flex-column">
-                <input class="form-control mb-2 form-button" type="submit" value="Sign up" />
-                <a href="/">Forgot Password?</a>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div class="col-lg-6 white">
+                <div class="register-box my-5 py-2">
+                    <h4 class="text-uppercase text-center mb-5 fw-bold">Create an acount</h4>
+                    <form id="register-form" method="post">
+                        <div class="row register-form mx-auto">
+                            <% if (message.length > 0) { %>
+                            <div class="col-md-12 mb-3">
+                              <div class="error">
+                                <i class="fas fa-times-circle me-2"></i>
+                                <span><%= message%></span>
+                              </div>
+                            </div>
+                            <% } %>
+                            <div class="form-group">
+                                <input id="fullname" class="form-control" type="text" 
+                                placeholder="Fullname" name="fullname" rules="required"/>
+                                <div class="message"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="username" class="form-control" type="text" 
+                                placeholder="Username" name="username" rules="required"/>
+                                <div class="message"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="email" class="form-control" type="text" 
+                                placeholder="Email" name="email" rules="required|email"/>
+                                <div class="message"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="phoneNumber" class="form-control" type="text" 
+                                placeholder="Phone Number" name="phone" rules="required|min:10|max:11"/>
+                                <div class="message"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="password" class="form-control" type="password" 
+                                placeholder="Password" name="password" rules="required|min:6"/>
+                                <div class="message"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="password_confirmation" class="form-control" type="password" 
+                                placeholder="Confirm Password" name="confirmPassword" rules="required"/>
+                                <div class="message"></div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <input class="form-control mb-3" type="submit" value="Register" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
       </div>
     </div>
@@ -82,5 +90,9 @@
     <script src="/login-style/js/popper.min.js"></script>
     <script src="/login-style/js/bootstrap.min.js"></script>
     <script src="/login-style/js/main.js"></script>
+    <script src="/login-style/js/validator.js"></script>
+    <script>
+        Validator('#register-form');
+    </script>
   </body>
 </html>

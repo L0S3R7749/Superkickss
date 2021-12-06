@@ -1,4 +1,5 @@
-const Product = require('../../models/schema/Product');
+const mongoose = require('mongoose');
+const Product = require('../../models/Product');
 
 exports.find = (req, res) => {
     if (req.query.id) {
