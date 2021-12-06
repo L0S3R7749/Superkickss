@@ -1,18 +1,16 @@
-const User = require('../../models/schema/User');
+const User = require('../../models/User');
 
-exports.findUser = ({usernanmeFind, emailFind, phoneFind}) => {
-    return User.findOne({
-        $and: [
-        {
-            $or: [
-            {username: usernanmeFind},
+exports.findUser = (usernameFind, emailFind, phoneFind) => {
+    const dummyExactString = (string) => {
+        return `\"${string}\"`;
+    }
+    return User.findOne({$and: [
+        {$or: [
+            {username: usernameFind},
             {email: emailFind},
-            {phoneNumber: phoneFind},
-            ]
-        },
-        {userRight: 'user'},
-        ]
-    });
+            {phoneNumber: phoneFind}
+        ]},
+        {userRight: 'user'}]}).lean();
 }
 
 exports.createUser = ({fullname, username, hashpassword, email, phone}) => {

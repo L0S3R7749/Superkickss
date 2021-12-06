@@ -12,18 +12,19 @@ router.post('/', async (req, res) => {
   const {
     fullname,
     username,
-    password,
-    confirmPassword,
     email,
-    phone
+    phone,
+    password,
+    confirmPassword
   } = req.body;
 
   if (password != confirmPassword) {
     req.flash('error', 'Confirm-password does not match!');
     res.redirect('/auth/signup');
   } else {
-    const checkExist = await services.findUser({username, email, phone});
-
+    const checkExist = await services.findUser(username, email, phone);
+    console.log(checkExist);
+  
     if (checkExist) {
       req.flash('error', 'This user already exists!');
       res.redirect('/auth/signup');

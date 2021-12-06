@@ -5,6 +5,7 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('./default/index', {title: 'Login', body: '../auth/login', message: req.flash('error')});
+  console.log(req.flash('error'));
 });
 
 router.post("/", 
