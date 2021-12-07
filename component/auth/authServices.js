@@ -1,14 +1,11 @@
 const User = require('../../models/User');
 
-exports.findUser = (usernameFind, emailFind, phoneFind) => {
-    const dummyExactString = (string) => {
-        return `\"${string}\"`;
-    }
+exports.findUser = ({username, email, phone}) => {
     return User.findOne({$and: [
         {$or: [
-            {username: usernameFind},
-            {email: emailFind},
-            {phoneNumber: phoneFind}
+            {username: username},
+            {email: email},
+            {phoneNumber: phone}
         ]},
         {userRight: 'user'}]}).lean();
 }
