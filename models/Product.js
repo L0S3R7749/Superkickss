@@ -43,15 +43,20 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      priority: {
-        type: Number,
-        required: true,
-      },
+      cloudinary_id: {
+        type: String
+      }
     },
   ],
   category: {
-    type: String,
-    required: true,
+    gender: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
   },
   tags: [
     {

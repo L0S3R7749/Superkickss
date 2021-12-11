@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['admin', 'user'],
         default: 'user',
+    },
+    image: {
+        url: {
+            type: String
+        },
+        cloudinary_id: {
+            type: String
+        }
     }
 });
 

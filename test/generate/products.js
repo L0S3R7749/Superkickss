@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const faker = require("faker");
 
-const Product = require("../../models/schema/Product");
-const User = require("../../models/schema/User");
+const Product = require("../../models/Product");
+const User = require("../../models/User");
 
 const random = (min, max) => {
   let range = max - min;
@@ -32,13 +32,15 @@ const createImages = () => {
   let num_images = random(1, 5);
   let image_priority = Array.from(Array(num_images).keys()); // [0 ... n]
   return image_priority.map((x) => {
-    return { url: faker.image.image(), priority: x };
+    return { url: faker.image.image()};
   });
 };
 
-const createCategory = (array) => {
+const createCategory = (genders, types) => {
   // Pick random n elements
-  return array[Math.floor(Math.random()*array.length)];
+  let gender = genders[Math.floor(Math.random() * genders.length)];
+  let type = types[Math.floor(Math.random() * types.length)];
+  return { gender: gender, type: type };
 };
 
 const createTags = (array) => {
@@ -83,13 +85,10 @@ const createProducts = async (numProducts = 50) => {
           SKU: faker.vehicle.vin(), // Random for nothing
           details: createProductDetails(),
           images: createImages(),
-          category: createCategory([
-            "Nam",
-            "Nữ",
-            "Đường phố",
-            "Thể thao",
-            "Hiện đại",
-          ]),
+          category: createCategory(
+            ["Male", "Female", "Unisex"],
+            ["Sport", "Casual", "Street"]
+          ),
           tags: createTags([
             "Trending",
             "Bán chạy",
