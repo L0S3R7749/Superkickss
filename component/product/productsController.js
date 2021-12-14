@@ -1,39 +1,55 @@
 const services = require('./productsService');
-const express = require('express');
-const apicaller = require('../../public/js/apiCaller');
-const router = express.Router();
 
-router.get('/', function(req, res, next) {
-    apicaller.callApi(`product/paramsApi?page=${req.query.page}`,'GET',null)
-        .then(function(responseData) {
-            res.render('./default/index', {title: 'Products', body: '../product/shop', home: '/product?', products: responseData.data.products, current: responseData.data.current, pages: responseData.data.pages});
-        })
-        .catch(err => {
-            res.send(err);
-        });
-});
+module.exports = {
+    list: async (req, res) => {
+        try {
+            const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
+            const productList = await services.list(page);
+            const countAll = await services.customCount();
+            const pages = Math.ceil(countAll / 9);
 
-router.get('/detail', function(req, res, next) {
-    apicaller.callApi(`product/api?id=${req.query.id}`,'GET',null)
-      .then(function(responseData) {
-        res.render('./default/index', { title: 'Product Detail' ,body: '../product/detail', product: responseData.data});
-      })
-      .catch(err => {
-        res.send(err);
-      });
-});
+            res.render('./default/index', {
+                title: 'Products',
+                body: '../product/shop',
+                home: '/product?',
+                products: productList,
+                current: page,
+                pages: pages});
+        } catch(err) {
+            console.log(err);
+        }
+    },
 
-router.get('/search', function(req, res, next) {
-    apicaller.callApi(`product/paramsApi?search=${req.query.search}&page=${req.query.page}`,'GET',null)
-        .then(function(responseData) {
-            res.render('./default/index', {title: 'Products', body: '../product/shop', home: `/product/search?search=${req.query.search}&`, products: responseData.data.products, current: responseData.data.current, pages: responseData.data.pages});
-        })
-        .catch(err => {
-            res.send(err);
-        });
-});
+    search: async (req, res) => {
+        try {
+            const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
+            const productList = await services.search_list(req.query.search, page);
+            const countAll = await services.customCount(req.query.search);
+            const pages = Math.ceil(countAll / 9);
 
-router.get('/api', services.find);
-router.get('/paramsApi', services.list);
+            res.render('./default/index', {
+                title: 'Search Results',
+                body: '../product/shop',
+                home: `/product/search?search=${req.query.search}&`,
+                products: productList,
+                current: page,
+                pages: pages});
+        } catch(err) {
+            console.log(err);
+        }
+    },
 
-module.exports = router;
+    product_detail: async (req, res) => {
+        try {
+            const idTarget = req.query.id;
+            const targetProduct = await services.findSingleProduct(idTarget);
+
+            res.render('./default/index', {
+                title: 'Product Detail',
+                body: '../product/detail',
+                product: targetProduct});
+        } catch(err) {
+            console.log(err);
+        }
+    }
+};

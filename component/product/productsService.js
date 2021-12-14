@@ -1,53 +1,29 @@
-const mongoose = require('mongoose');
 const Product = require('../../models/Product');
 
-exports.find = (req, res) => {
-    if (req.query.id) {
-        const id = req.query.id;
+module.exports = {
+    list: (page=1,perPage=9) => {
+        return Product
+            .find()
+            .skip((perPage * page) - perPage)
+            .limit(perPage);
+    },
 
-        Product.findById(id)
-            .then(data => {
-                if (!data)
-                    res.status(400).send({message : "Not found product with id " + id});
-                else
-                    res.send(data);
-            })
-            .catch(err=>{
-                res.status(500).send({message:"Error retrieving product with id " + id});
-            })
+    search_list: (searchString,page=1,perPage=9) => {
+        let myquery = {};
+        myquery = {"name" : {$regex : searchString, $options : 'i'}};
+        return Product
+            .find(myquery)
+            .skip((perPage * page) - perPage)
+            .limit(perPage);
+    },
 
-    }
-    else {
-        Product.find()
-            .then(data => {
-                res.send(data);
-            })
-            .catch(err=>{
-                res.status(500).send({message:err.message || "Error occurred while retrieving product information!"});
-            });
-    }
-}
+    customCount: (searchString) => {
+        return Product
+            .countDocuments(searchString ? {"name" : {$regex : searchString, $options : 'i'}} : {});
+    },
 
-exports.list = (req, res) => {
-    let perPage=9;
-    let page= (!isNaN(req.query.page) && req.query.page > 0) ? req.query.page : 1;
-    console.log(page);
-    let myquery = {};
-    if (req.query.search) {
-        myquery.$or = [
-            {"name" : {$regex : req.query.search, $options : 'i'}},
-            {"description" : {$regex : req.query.search, $options : 'i'}},
-        ];
-    }
-    Product.find(myquery)
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec((err, products) => {
-            Product.find(myquery).countDocuments((err, count) => { 
-                if (err) return next(err);
-                console.log(count);
-                res.send({products: products,
-                            current: page, pages: Math.ceil(count/perPage)});
-            });
-        });
-}
+    findSingleProduct: (id) => {
+        return Product
+            .findById(id);
+    } 
+};
