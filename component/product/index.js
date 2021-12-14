@@ -3,7 +3,10 @@ const router = express.Router();
 
 const controller = require('./productsController');
 
-/* GET home page. */
-router.use('/', controller);
+router.get('/', controller.list);
+
+router.get('/search', controller.search);
+
+router.get('/detail', controller.product_detail);
 
 module.exports = router;

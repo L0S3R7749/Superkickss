@@ -13,75 +13,72 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0,
-    max: 999999999,
+    max: 999999999
   },
   description: {
     type: String,
     required: true,
-  },
+  }, 
   SKU: {
     type: String,
     required: true,
   },
-  details: [
-    {
-      size: {
+  details: [{
+    size: {
         type: Number,
         required: true,
-      },
-      quantity: {
+    },
+    quantity: {
         type: Number,
         required: true,
         min: 0,
         max: 999999,
-      },
-    },
-  ],
-  images: [
-    {
-      url: {
+    }
+  }],
+  images: [{
+    url: {
         type: String,
         required: true,
-      },
-      priority: {
-        type: Number,
-        required: true,
-      },
     },
-  ],
+    cloudinary_id: {
+        type: String,
+    }
+  }],
   category: {
-    type: String,
-    required: true,
+    gender: {
+        type: String,
+        required: true,
+    }, 
+    type: {
+        type: String,
+        required: true
+    }
   },
-  tags: [
-    {
-      name: {
+  tags: [{
+    name: {
         type: String,
         required: true,
-      },
     },
-  ],
-  comments: [
-    {
-      userId: {
+  }],
+  comments: [{
+    userId: {
         type: String,
         required: true,
-      },
-      fullname: {
+    },
+    fullName: {
         type: String,
         required: true,
-      },
-      content: {
+    },
+    content: {
         type: String,
         required: true,
-      },
-      createdTime: {
+    },
+    createdTime: {
         type: Date,
         required: true,
         default: Date.now,
-      },
-    },
-  ],
+    }
+  }]
 });
 
 module.exports = mongoose.model("Product", productSchema);
