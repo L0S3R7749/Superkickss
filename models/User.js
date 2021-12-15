@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
         enum: ['admin', 'user'],
         default: 'user',
     },
+    isLock:{
+        type: Boolean,
+        required: true,
+        default: false,
+    },
     image: {
         url: {
             type: String

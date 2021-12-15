@@ -13,6 +13,9 @@ passport.use(new LocalStrategy(
             if (!validPassword(user, password)) {
                 return done(null, false, {message : 'Incorrect password.'});
             }
+            if(user.isLock===true){
+                return done(null, false, {message : 'Your account has been locked.'});
+            }
             console.log(user);
             return done(null, user);
         } catch (err) {
