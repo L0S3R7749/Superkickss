@@ -1148,3 +1148,22 @@ a:hover {
 .login-button button:hover::before {
   transform: translate3d(-50%, -50%, 0) scale3d(15, 15, 15);
 }
+
+.product-comment{
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.product-comment .comment__user{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* background-color: #000; */
+}
+
+.product-comment .comment__user .comment__user-avatar{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color:#000;
+}
