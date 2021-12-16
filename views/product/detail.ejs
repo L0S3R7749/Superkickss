@@ -1,7 +1,11 @@
 <div class="bg-light py-3">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><%=product.name%></strong></div>
+        <div class="col-md-12 mb-0">
+          <a href="/">Home</a>
+          <span class="mx-2 mb-0">/</span> 
+          <strong class="text-black"><%=product.name%></strong>
+        </div>
       </div>
     </div>
   </div>  
@@ -71,31 +75,28 @@
         <div class="col-md-4">
           <div class="comment__user mb-4">
             <div class="comment__user-avatar"></div>
-            <div class="comment__user-name"><h5>Cao Hải Síl</h5></div>
+            <div class="comment__user-name">
+              <!--if else cho nay-->
+              <h5><%=locals.user.username%></h5>
+            </div>
           </div>
         </div>
         <div class="col-md-8">
-          <div class="form-group">
-            <label for="comment__text"><h5>Viết bình luận</h5></label>
-            <textarea class="form-control" id="comment__text" rows="3"></textarea>
-          </div>
-          <button type="button" class="btn btn-outline-primary float-right">Bình luận</button>
+          <form method="post" >
+            <div class="form-group">
+              <label for="commentContent"><h5>Viết bình luận</h5></label>
+              <input type="hidden" name="productId" value="<%= product._id%>">
+              <input type="hidden" name="userId" value="<%= locals.user._id%>">
+              <input type="hidden" name="fullname" value="<%= locals.user.fullname%>">
+              <input type="number" name="rating" min=1 max=5>
+              <textarea class="form-control" name="content" id="commentContent" rows="3"></textarea>
+            </div>
+            <button type="submit" id="post-rating" class="btn btn-outline-primary float-right">Bình luận</button>
+          </form>
         </div>
       </div>
-      <div class="row mb-4">
-        <div class="col-md-4">
-          <div class="comment__user mb-4">
-            <div class="comment__user-avatar"></div>
-            <div class="comment__user-name"><h5>Cao Hải Síl</h5></div>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <h5>20/12/2021</h5>
-          <div class="comment__content mb-4">Quá tuyệt vời</div>
-          <div class="comment__button-group">
-            <button type="button" class="btn btn-outline-primary"><i class="fas fa-thumbs-up"></i>&nbsp;&nbsp;Hữu ích</button>
-          </div>
-        </div>
+      <div class="row mb-4" id="ratings">
+        
       </div>
     </div>
   </div>
