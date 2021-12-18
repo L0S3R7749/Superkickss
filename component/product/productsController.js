@@ -63,11 +63,8 @@ module.exports = {
                 fullname,
                 content,
             }=req.body;
-            const comment = await services.rating(productId,
-                                          userId,
-                                          fullname,
-                                          content);
-
+            const comment = await services.rating(productId, userId,
+                                                fullname, content);
             res.status(201).json(comment);
         }catch(err){
             console.log(err);
@@ -77,8 +74,16 @@ module.exports = {
     getRatings: async (req,res) =>{
         const productId = req.params.id;
         try{
-            let getRating= await services.getRating(productId);
-            res.status(200).json(getRating.comments);
+            let perPage=5;
+            let page = !Number.isNaN(req.query.page) && req.query.page > 0 ? Number.parseInt(req.query.page) : 1;
+            let getRating= await services.getRating(productId,page,perPage);
+            let totalPage=Math.ceil(getRating.allComment.length/perPage);
+            const respone={
+                perPage,
+                totalPage,
+                rates: getRating.comments, 
+            }
+            res.status(200).json(respone);
         }catch(err){
             console.log(err);
         }
