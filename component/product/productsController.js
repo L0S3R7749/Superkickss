@@ -1,7 +1,5 @@
 const services = require('./productsService');
 
-
-
 module.exports = {
     list: async (req, res) => {
         try {

@@ -2,7 +2,7 @@ $(document).ready(()=>{
     loadRatings();
 });
 
-//comment
+//add comment
 $('#post-rating').on('click', e => {
     e.preventDefault();
     let productId = $('input[name=productId]').val();
@@ -30,6 +30,7 @@ $('#post-rating').on('click', e => {
     $('textarea[name=content]').val('');
 });
 
+//load comments
 function loadRatings(page,size) {
     $.ajax({
         url: `/product/${$('input[name=productId]').val()}/ratings?page=${page}&size=${size}`,
