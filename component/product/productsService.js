@@ -28,9 +28,7 @@ module.exports = {
     },
 
     rating: async (productId,userId,fullname,content) =>  {
-        // console.log(productId);
         let product=await Product.findById(productId);
-        // console.log(product);
         let comment={
             userId: userId,
             fullname: fullname,

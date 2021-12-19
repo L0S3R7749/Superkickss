@@ -9,6 +9,10 @@ $('#post-rating').on('click', e => {
     let userId = $('input[name=userId]').val();
     let fullname = $('input[name=fullname]').val();
     let content = $('textarea[name=content]').val();
+    if(content==''){
+        console.log(`can't comment with empty string`);
+        return;
+    }
     $.ajax({
         url: '/product/rate',
         method: 'POST',
@@ -23,18 +27,8 @@ $('#post-rating').on('click', e => {
             loadRatings();
         }
     })
+    $('textarea[name=content]').val('');
 });
-
-// `<div class="col-md-4 mb-4">
-//     <div class="comment__user mb-4">
-//         <div class="comment__user-avatar"></div>
-//         <div class="comment__user-name"><h5>${rating.fullname}</h5></div>
-//     </div>
-//     </div>
-//     <div class="col-md-8 mb-4">
-//         <h5>${rating.createdTime}</h5>
-//         <div class="comment__content mb-4">${rating.content}</div>
-// </div>`
 
 function loadRatings(page,size) {
     $.ajax({
@@ -55,6 +49,8 @@ function loadRatings(page,size) {
 }
 
 function appendRate(rate){
+    let date=new Date(rate.createdTime);
+    let dateStr=date.getDate()+ '/'+(date.getMonth()+1)+'/'+date.getFullYear();
     let html=`<div class="col-md-4 mb-4">
                 <div class="comment__user mb-4">
                     <div class="comment__user-avatar"></div>
@@ -62,7 +58,7 @@ function appendRate(rate){
                 </div>
             </div>
             <div class="col-md-8 mb-4">
-                <h5>${rate.createdTime}</h5>
+                <h5>${dateStr}</h5>
                 <div class="comment__content mb-4">${rate.content}</div>
             </div>`
     $('#ratings').append(html);
@@ -80,6 +76,7 @@ function buildPagination(totalPage){
         }
         $('ul.pagination').append(page);
     }
+    
     page='<li class="page-item"><a class="page-link right">&gt</a></li>';
     $('ul.pagination').append(page);
 
@@ -87,8 +84,6 @@ function buildPagination(totalPage){
     $(document).on('click','ul.pagination li',e=>{
         let value=e.target.text;
         if (!value) {
-            // value = e.target.classList.value.includes('fas') ? e.target.classList.value
-            //     : e.target.childNodes[0].classList.value;
             if (value.includes('left')) {
                 const curentPage = $("li.active");
                 const page = Number.parseInt(curentPage.text());
