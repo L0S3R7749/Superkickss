@@ -34,7 +34,6 @@ module.exports = {
             rating: rating,
             content: content,
         };
-        console.log(comment);
         product.comments.push(comment);
         product.save();
         return comment;
@@ -50,5 +49,5 @@ module.exports = {
             comments,
         };
         return respone;
-    }
+    },
 };
