@@ -7,7 +7,8 @@ $('#post-rating').on('click', e => {
     e.preventDefault();
     let productId = $('input[name=productId]').val();
     let userId = $('input[name=userId]').val();
-    let fullname = $('input[name=fullname]').val();
+    let rating = parseInt($("input[type=radio][name=rating]:checked").val());
+    console.log(rating);
     let content = $('textarea[name=content]').val();
     if(content==''){
         console.log(`can't comment with empty string`);
@@ -19,7 +20,7 @@ $('#post-rating').on('click', e => {
         data: {
             productId,
             userId,
-            fullname,
+            rating,
             content,
         },
         success: function (data) {
@@ -36,7 +37,7 @@ function loadRatings(page,size) {
         url: `/product/${$('input[name=productId]').val()}/ratings?page=${page}&size=${size}`,
         method: 'GET',
         success: function (data) {
-            
+            console.log(data);
             $('#ratings').empty();
             $.each(data.rates,function(index,item){
                 appendRate(item);
@@ -55,7 +56,10 @@ function appendRate(rate){
     let html=`<div class="col-md-4 mb-4">
                 <div class="comment__user mb-4">
                     <div class="comment__user-avatar"></div>
-                    <div class="comment__user-name"><h5>${rate.fullname}</h5></div>
+                    <div class="comment__user-name">
+                        <h5>${rate.userId.fullname}</h5>
+                        <p>Đánh giá: ${rate.rating} sao</p>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8 mb-4">

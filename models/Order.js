@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
     },
     shippingAddress: {
       type: String,
-      required: true,
+      // required: true,
     },
     status: {
       type: String,
@@ -43,11 +43,16 @@ const orderSchema = new mongoose.Schema({
         quantity: {
           type: Number,
           required: true,
-          min: 0,
+          min: 1,
           max: 999999,
         },
       },
     ],
+    totalPrice:{
+      type: Number,
+      required: true,
+      default: 0,
+    }
   },
   { timestamp: true }
 );

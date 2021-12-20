@@ -58,11 +58,11 @@ module.exports = {
             const {
                 productId,
                 userId,
-                fullname,
+                rating,
                 content,
             }=req.body;
             const comment = await services.rating(productId, userId,
-                                                fullname, content);
+                                                rating, content);
             res.status(201).json(comment);
         }catch(err){
             console.log(err);
