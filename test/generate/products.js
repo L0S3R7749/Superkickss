@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const faker = require("faker");
 
-const Product = require("../../models/schema/Product");
-const User = require("../../models/schema/User");
+const Product = require("../../models/Product");
+const User = require("../../models/User");
 
 const random = (min, max) => {
   let range = max - min;
@@ -36,9 +36,15 @@ const createImages = () => {
   });
 };
 
-const createCategory = (array) => {
+const createCategory = (genderArray,typeArray) => {
   // Pick random n elements
-  return array[Math.floor(Math.random()*array.length)];
+  let gender=genderArray[Math.floor(Math.random()*genderArray.length)];
+  let type=typeArray[Math.floor(Math.random()*typeArray.length)];
+  let category={
+    gender,
+    type,
+  }
+  return category;
 };
 
 const createTags = (array) => {
@@ -62,7 +68,7 @@ const createComments = async (min, max) => {
       const result = await User.findOne().skip(rand);
       return {
         userId: result.id,
-        fullname: result.fullname,
+        rating: Math.floor((Math.random() * 5)+1),
         content: faker.lorem.text(),
         createdTime: faker.date.past(),
       };
@@ -83,13 +89,14 @@ const createProducts = async (numProducts = 50) => {
           SKU: faker.vehicle.vin(), // Random for nothing
           details: createProductDetails(),
           images: createImages(),
-          category: createCategory([
-            "Nam",
-            "Nữ",
-            "Đường phố",
-            "Thể thao",
-            "Hiện đại",
-          ]),
+          category: createCategory(
+            ["Male",
+            "Female",
+            "Unisex",],
+            ["Street",
+            "Sport",
+            "Casual",],
+          ),
           tags: createTags([
             "Trending",
             "Bán chạy",
@@ -112,7 +119,7 @@ router.get("/", async (req, res, next) => {
     num_product = await Product.count({});
     // if (num_user !== 0) return res.redirect("/");
     console.log("Starting generate...");
-    let fakeProducts = await createProducts(20);
+    let fakeProducts = await createProducts(30);
     // console.log(fakeProducts[0]);
     const result = await Product.insertMany(fakeProducts);
     console.log(result);

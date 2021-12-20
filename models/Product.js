@@ -62,16 +62,18 @@ const productSchema = new mongoose.Schema({
   }],
   comments: [{
     userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
         required: true,
     },
-    fullname: {
-        type: String,
-        required: true,
+    rating: {
+      type: Number,
+      required: true,
+      default: 5,
     },
     content: {
         type: String,
-        required: true,
+        require: true,
+        default: '',
     },
     createdTime: {
         type: Date,
