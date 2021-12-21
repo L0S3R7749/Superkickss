@@ -922,14 +922,16 @@ a:hover {
 
 .site-blocks-table {
   overflow: auto;
+  max-height: 700px;
 }
 
-.site-blocks-table .product-thumbnail {
+
+.site-blocks-table .items-thumbnail {
   width: 200px;
 }
 
 .site-blocks-table thead th {
-  padding: 30px;
+  padding: 20px;
   text-align: center;
   border-width: 1px !important;
   vertical-align: middle;
@@ -946,6 +948,11 @@ a:hover {
 
 .site-blocks-table tbody tr:first-child td {
   border-top: 1px solid #7971ea !important;
+}
+
+.site-block-table thead .items-remove,
+.site-block-table tbody .items-remove{
+  max-width: 100px;
 }
 
 .site-block-order-table th {

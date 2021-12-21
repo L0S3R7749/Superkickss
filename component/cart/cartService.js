@@ -1,8 +1,9 @@
 const Cart=require('../../models/Cart');
 
 module.exports={
-    getCart: {
-
+    getCart: async (user_id)=> {
+        return Cart.findOne({user_id: user_id})
+                    .populate('items.itemId');
     },
     addCart: async (userId,itemId,itemSize,itemQuantity)=>{
         try{
@@ -32,16 +33,11 @@ module.exports={
                         }  
                     }
                 }
-                if(checkId==false){
+                if(checkId==true&&checkSize==true){
+                    return null;
+                }else{
                     cart.items.push(items);
                     return cart.save();
-                }else{
-                    if(checkSize==false){
-                        cart.items.push(items);
-                        return cart.save();
-                    }else{
-                        return null;
-                    }
                 }
             }
         }catch(err){

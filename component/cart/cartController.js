@@ -1,8 +1,14 @@
 const services=require('./cartService');
 
 module.exports={
-    cart: (req,res,next)=>{
-        res.render('./default/index', { title: 'Cart' ,body: '../order/cart'});
+    cart: async (req,res,next)=>{
+        let user_id=req.user._id;
+        let cart=await services.getCart(user_id);
+        let total=0;
+        for( let i=0;i<cart.items.length; i++){
+            total+=cart.items[i].itemId.price * cart.items[i].quantity;
+        }
+        res.render('./default/index', { title: 'Cart' ,body: '../cart/cart',cart: cart, total:total});
     },
     add: async(req,res,next)=>{
         let userId=req.body.userId;
