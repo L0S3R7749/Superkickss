@@ -1,26 +1,25 @@
 <% for (let i = 0; i < cart.items.length; i++) { %>
-<tr>
+<tr class="item-cart" data-id="<%= cart.items[i].itemId._id%>">
+    <input type="hidden" class="id-items" value="<%= cart.items[i].itemId._id%>">
     <td class="items-thumbnail">
         <img src="<%= cart.items[i].itemId.images[0].url%>" alt="Image" class="img-fluid">
     </td>
     <td class="items-name">
         <h3 class="h5 text-black"><%= cart.items[i].itemId.name%></h3>
     </td>
-    <td><%= cart.items[i].itemId.price%></td>
-    <td><%= cart.items[i].itemSize%></td>
-    <td class="items-quantity">
+    <td>$<%= cart.items[i].itemId.price%></td>
+    <td class="size-items" data-id="<%= cart.items[i].itemSize%>"><%= cart.items[i].itemSize%></td>
+    <td >
         <div class="input-group" style="max-width: 120px;">
-            <div class="input-group-prepend">
-                <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-            </div>
-            <input type="text" class="form-control text-center" value="<%= cart.items[i].quantity%>" placeholder=""
-                aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-            </div>
+            <input type="number" class="form-control text-cente quantity-items" name="quantity-items" value="<%= cart.items[i].quantity%>"
+                placeholder="" aria-label="Example text with button addon" min="1" aria-describedby="button-addon1">          
         </div>
     </td>
-    <td><%= cart.items[i].itemId.price * cart.items[i].quantity%></td>
-    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+    <td>$<%= cart.items[i].itemId.price * cart.items[i].quantity%></td>
+    <td>
+        <div class="item-size" data-id="<%= cart.items[i].itemSize%>">
+            <button class="btn btn-primary btn-sm remove-item">X</button>
+        </div>
+    </td>
 </tr>
 <% } %>

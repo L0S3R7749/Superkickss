@@ -44,4 +44,23 @@ module.exports={
             console.log(err);
         }
     },
+    remove: async (user_id,itemId,itemSize)=>{
+        try{
+            let cart=Cart.updateOne({'user_id': user_id,},{
+                            $pull:{
+                                items: {
+                                    'itemId': itemId,
+                                    'itemSize': itemSize,
+                                }
+                            }
+                        })
+            return cart;
+        }catch(err){
+            console.log(err);
+            return null;
+        }
+    },
+    update: async (user_id,items)=>{
+        return Cart.findOneAndUpdate({user_id: user_id},{items:items});
+    }
 };

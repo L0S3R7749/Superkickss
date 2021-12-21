@@ -6,6 +6,10 @@ const controller = require('./cartController');
 
 router.post('/add',checkAuth.checkAuthentication,controller.add);
 
+router.post('/remove',controller.remove);
+
+router.post('/update',controller.update);
+
 router.get('/',checkAuth.checkAuthentication,controller.cart);
 
 module.exports = router;

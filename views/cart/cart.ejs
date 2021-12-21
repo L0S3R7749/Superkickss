@@ -5,7 +5,7 @@
       </div>
     </div>
   </div>
-
+  <input type="hidden" name="userId" value="<%= locals.user._id%>">
   <div class="site-section">
     <div class="container">
       <div class="row mb-5">
@@ -35,7 +35,7 @@
         <div class="col-md-6">
           <div class="row mb-5">
             <div class="col-md-6 mb-3 mb-md-0">
-              <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
+              <button class="btn btn-primary btn-sm btn-block update-cart">Update Cart</button>
             </div>
             <div class="col-md-6">
               <a href="/product" class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
@@ -55,7 +55,7 @@
                   <span class="text-black">Subtotal</span>
                 </div>
                 <div class="col-md-6 text-right">
-                  <strong class="text-black">$<%= total%></strong>
+                  <strong class="text-black">$ <%= total%></strong>
                 </div>
               </div>
               <div class="row mb-5">
@@ -69,7 +69,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='/order/cart/checkout'">Proceed To Checkout</button>
+                  <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='/order'">Proceed To Checkout</button>
                 </div>
               </div>
             </div>
