@@ -61,4 +61,12 @@ module.exports={
             res.status(300).send(cart);
         }
     },
+    getCartById: async (req,res,next)=>{
+        let cartId = req.params.id;
+        const cart = await services.getCartById(cartId);
+        if (!cart)
+            res.status(500).send({message: 'error'});
+        else
+            res.status(200).send(cart);
+    }
 };

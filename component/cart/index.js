@@ -10,6 +10,8 @@ router.post('/remove',controller.remove);
 
 router.post('/update',controller.update);
 
+router.get('/getSingle/:id', controller.getCartById);
+
 router.get('/',checkAuth.checkAuthentication,controller.cart);
 
 module.exports = router;

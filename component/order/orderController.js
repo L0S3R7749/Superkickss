@@ -1,12 +1,39 @@
-const express = require('express');
-const router = express.Router();
+const services = require('./orderServices');
+const cartService = require('../cart/cartService');
+const Order = require('../../models/Order');
 
-router.get('/', (req, res) => {
-    res.render("./default/index", {
-        title: "Homepage",
-        body: "../order/checkout",
-      });
-  // res.send('Response from order router');
-})
+module.exports = {
+  checkout: async (req,res,next)=>{
+    console.log(res.locals.user);
+    const targetCart = await cartService.getCartForOrder(res.locals.user._id);
+    let totalPrice = 0;
+    for (let i = 0; i < targetCart.items.length; i++) {
+      totalPrice += targetCart.items[i].itemId.price * targetCart.items[i].quantity;
+    }
+    res.render('./default/index', { 
+      title: 'Checkout',
+      body: '../order/checkout',
+      cart: targetCart,
+      total: totalPrice,
+    });
+  },
 
-module.exports = router;
+  create_order: async (req,res,next) => {
+    try {
+      const {
+        cartId,
+        shippingAddress,
+        totalPrice
+      } = req.body;
+      const newOrder = await services.add_order(res.locals.user._id, shippingAddress, cartId, totalPrice);
+      if (newOrder) {
+        await cartService.removeCart(cartId);
+        res.status(201).send(newOrder);
+      }
+      else
+        res.status(500).send({message: "Error create new Order"});
+    } catch(err) {
+      console.log(err.message);
+    }
+  }
+}

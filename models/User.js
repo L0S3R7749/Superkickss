@@ -21,10 +21,8 @@ const userSchema = new mongoose.Schema({
         type: String,
     }, 
     addresses: [{
-        address: {
-            type: String,
-            required: true,
-        }
+        type: String,
+        required: true,
     }],
     userRight: {
         type: String,
