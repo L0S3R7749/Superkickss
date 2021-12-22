@@ -1,12 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const services = require('./orderServices');
 
-router.get('/', (req, res) => {
-    res.render("./default/index", {
-        title: "Homepage",
-        body: "../order/checkout",
-      });
-  // res.send('Response from order router');
-})
-
-module.exports = router;
+module.exports = {
+  checkout: (req,res,next)=>{
+    res.render('./default/index', { title: 'Checkout' ,body: '../order/checkout'});
+  }
+}
