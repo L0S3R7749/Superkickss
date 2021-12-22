@@ -37,13 +37,13 @@
         </div>
       </div>
       <div class="col-md-6">
-        <h2 class="text-black"><%=product.name%></h2>
+        <h2 class="text-black" id="product-name"><%=product.name%></h2>
         <p class="mb-4"><%= product.description%></p>
         <p><strong class="text-primary h4">$<%=product.price%></strong></p>
         <div class="mb-1 d-flex mb-4">
           <form>
             <h5>Size</h5>
-            <select class="form-control form-select" id="psize">
+            <select class="form-control form-select" id="product-size">
               <% for (let i = 0; i < product.details.length; i++) { %>
               <option value="<%= product.details[i].size%>"><%= product.details[i].size%></option>
               <% } %>
@@ -53,18 +53,20 @@
         <div class="mb-4">
           <h5>Amount</h5>
           <div class="input-group" style="max-width: 120px;">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-            </div>
-            <input type="text" class="form-control text-center" value="1" placeholder=""
+            <input type="number" id="product-quantity" min="1" class="form-control text-center" value="1" placeholder=""
               aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <div class="input-group-append">
-              <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-            </div>
           </div>
 
         </div>
-        <p><a href="/cart" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+        <% if(locals.user) { %>
+          <button type="button" class="buy-now btn btn-sm btn-primary" data-toggle="modal" data-target="#addToCartModal">
+            Add To Cart
+          </button>
+        <% } else { %>
+          <button type="button" class="buy-now btn btn-sm btn-primary" data-toggle="modal" data-target="#loginModal">
+            Add To Cart
+          </button>
+        <% } %>
       </div>
     </div>
   </div>
@@ -78,7 +80,6 @@
             <div class="comment__user mb-4">
               <div class="comment__user-avatar"></div>
               <div class="comment__user-name">
-                <!--TODO: if else cho nay-->
                 <h5><%=locals.user.fullname%></h5>
               </div>
             </div>
@@ -90,7 +91,6 @@
 
             <% if(locals.user) { %>
               <div class="form-group">
-                <!-- <label for="commentContent"><h5>Viết bình luận</h5></label> -->
                 <div class="starrating risingstar d-flex flex-row-reverse float-left">
                   <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
                   <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
@@ -110,7 +110,7 @@
     <div class="row mb-4" id="ratings">
 
     </div>
-    <ul class="pagination">
+    <ul class="pagination d-flex justify-content-center">
 
     </ul>
   </div>
@@ -187,6 +187,83 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCart" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addToCart">Xác nhận</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có muốn thêm mặt hàng đã chọn vào giỏ hàng 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="submit-add-to-cart" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginNoti" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginNoti">Thông báo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn phải đăng nhập trước khi thêm mặt hàng vào giỏ hàng
+      </div>
+      <div class="modal-footer">
+        <a href="/auth/login" type="button" class="btn btn-primary">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reivewNotiModal" tabindex="-1" role="dialog" aria-labelledby="reviewNoti" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewNoti">Thông báo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn cần phải nhập gì đó trước khi bình luận
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addCartFailModal" tabindex="-1" role="dialog" aria-labelledby="addCartFail" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCartFail">Thông báo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn cần chỉnh số lượng mặt hàng trong giỏ hàng, không thêm ở đây
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
       </div>
     </div>
   </div>

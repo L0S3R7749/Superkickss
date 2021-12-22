@@ -7,6 +7,6 @@ const fakeOrders = require("./orders");
 
 router.use("/users", fakeUsers);
 router.use("/products", fakeProducts);
-// router.use("/orders", fakeOrders);
+router.use("/orders", fakeOrders);
 
 module.exports = router;

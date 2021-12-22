@@ -27,13 +27,11 @@ module.exports = {
             .findById(id);
     },
 
-    rating: async (productId,userId,fullname,content) =>  {
-        // console.log(productId);
+    rating: async (productId,userId,rating,content) =>  {
         let product=await Product.findById(productId);
-        // console.log(product);
         let comment={
             userId: userId,
-            fullname: fullname,
+            rating: rating,
             content: content,
         };
         product.comments.push(comment);
@@ -42,12 +40,14 @@ module.exports = {
     },
 
     getRating: async (productId,page,perPage=5) =>{
-        let product=await Product.findById(productId);
+        let product=await Product.findById(productId)
+                                .populate('comments.userId');
+
         let comments=product.comments.slice(perPage*page-perPage,perPage*page);
         const respone={
             allComment: product.comments,
             comments,
         };
         return respone;
-    }
+    },
 };

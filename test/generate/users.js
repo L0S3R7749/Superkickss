@@ -3,7 +3,7 @@ const router = express.Router();
 const faker = require("faker");
 const uuid4 = require("uuid4");
 
-const User = require("../../models/schema/User");
+const User = require("../../models/User");
 
 router.get("/", async (req, res, next) => {
   try {

@@ -1,24 +1,18 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-    user: {
-      _id: {
-        type: String,
-        required: true,
-      },
-      fullname: {
-        type: String,
-        required: true,
-      },
-      shippingAddress: {
-        type: String,
-        required: true,
-      },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId, ref: "User",
+      required: true,
+    },
+    shippingAddress: {
+      type: String,
+      // required: true,
     },
     status: {
       type: String,
-      enum: ["not checkout", "in progress", "shipping", "completed"],
-      default: "not checkout",
+      enum: ["in progress", "shipping", "completed"],
+      default: "in progress",
     },
     createdDate: {
       type: Date,
@@ -39,35 +33,26 @@ const orderSchema = new mongoose.Schema({
     items: [
       {
         itemId: {
-          type: String,
-          required: true,
-        },
-        itemName: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId, ref: "Product",
           required: true,
         },
         itemSize: {
           type: Number,
           required: true,
         },
-        itemThumbnail: {
-          type: String,
-          required: true,
-        },
-        price: {
-          type: Number,
-          required: true,
-          min: 0,
-          max: 999999999,
-        },
         quantity: {
           type: Number,
           required: true,
-          min: 0,
+          min: 1,
           max: 999999,
         },
       },
     ],
+    totalPrice:{
+      type: Number,
+      required: true,
+      default: 0,
+    }
   },
   { timestamp: true }
 );
