@@ -46,7 +46,7 @@ module.exports={
     },
     remove: async (user_id,itemId,itemSize)=>{
         try{
-            let cart=Cart.updateOne({'user_id': user_id,},{
+            let cart= await Cart.updateOne({'user_id': user_id,},{
                             $pull:{
                                 items: {
                                     'itemId': itemId,
@@ -60,7 +60,21 @@ module.exports={
             return null;
         }
     },
+    
+    removeCart: (id) => {return Cart.findByIdAndRemove(id);},
+
     update: async (user_id,items)=>{
         return Cart.findOneAndUpdate({user_id: user_id},{items:items});
+    },
+
+    getCartForOrder: (user_id) => {
+        return Cart.findOne({user_id: user_id})
+                    .populate('user_id')
+                    .populate('items.itemId');
+    },
+    getCartById: (id) => {
+        return Cart.findById(id)
+                    .populate('user_id')
+                    .populate('items.itemId');
     }
 };
