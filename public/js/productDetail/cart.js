@@ -16,7 +16,7 @@ if (window.location.pathname.match('/product/detail')) {
                 itemQuantity,
             },
             success: function (data) {
-                
+                $('#addToCartToast').toast('show');
             },
             error: function (data) {
                 if (data.responseJSON.message === `Can't add to cart`) {
@@ -45,6 +45,7 @@ if (window.location.pathname.match('/cart')) {
                 productSize,
             },
             success: function(data){
+                console.log(data);
                 location.reload();
                 //TODO: render ajax sau
             },
@@ -77,7 +78,7 @@ if (window.location.pathname.match('/cart')) {
                 quantity: quantity,
             },
             success: function(data){
-
+                location.reload();
             },
             error: function(data){
 

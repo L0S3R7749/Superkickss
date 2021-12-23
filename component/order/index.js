@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./orderController');
-const ty = require('./thankyou');
-const checkAuth = require('../../auth/check-auth');
 
 router.get('/checkout', controller.checkout);
 
 router.post('/checkout', controller.create_order);
 
-router.use('/thankyou', checkAuth.checkAuthentication, ty);
+router.use('/thankyou', controller.thankyou);;
 
-// router.get('/', controller);
+router.get('/', controller.list);
 
 module.exports = router;

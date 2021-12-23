@@ -1,22 +1,19 @@
 const indexRouter = require('./homepage');
 const siteRouter = require('./site');
-// const aboutRouter = require('./about');
 const authRouter = require('./auth');
-// const contactRouter = require('./contact');
 const shopRouter = require('./product');
 const orderRouter = require('./order');
 const cartRouter = require('./cart');
+const checkAuth = require('../auth/check-auth');
+
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
-// router.use('/about', aboutRouter);
-// router.use('/contact', contactRouter);
 router.use('/site',siteRouter);
 router.use('/auth', authRouter);
 router.use('/product', shopRouter);
-router.use('/order', orderRouter);
-router.use('/cart',cartRouter);
+router.use('/order',checkAuth.checkAuthentication, orderRouter);
+router.use('/cart',checkAuth.checkAuthentication, cartRouter);
 router.use('/', indexRouter);
 
 module.exports = router;

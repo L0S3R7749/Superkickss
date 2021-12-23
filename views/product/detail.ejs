@@ -43,7 +43,7 @@
         <div class="mb-1 d-flex mb-4">
           <form>
             <h5>Size</h5>
-            <select class="form-control form-select" id="product-size">
+            <select class="form-select" id="product-size">
               <% for (let i = 0; i < product.details.length; i++) { %>
               <option value="<%= product.details[i].size%>"><%= product.details[i].size%></option>
               <% } %>
@@ -59,7 +59,8 @@
 
         </div>
         <% if(locals.user) { %>
-          <button type="button" class="buy-now btn btn-sm btn-primary" data-toggle="modal" data-target="#addToCartModal">
+          <!--data-toggle="modal" data-target="#addToCartModal"-->
+          <button type="button" id="submit-add-to-cart" class="buy-now btn btn-sm btn-primary">
             Add To Cart
           </button>
         <% } else { %>
@@ -192,26 +193,6 @@
   </div>
 </div>
 
-<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCart" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addToCart">Xác nhận</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Bạn có muốn thêm mặt hàng đã chọn vào giỏ hàng 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="submit-add-to-cart" class="btn btn-primary" data-dismiss="modal">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginNoti" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -265,6 +246,19 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="addToCartToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="" class="rounded me-2" >
+      <strong class="me-auto">Superkickss</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Thêm vào giỏ hàng thành công
     </div>
   </div>
 </div>

@@ -2,7 +2,7 @@ const Cart=require('../../models/Cart');
 
 module.exports={
     getCart: async (user_id)=> {
-        return Cart.findOne({user_id: user_id})
+        return await Cart.findOne({user_id: user_id})
                     .populate('items.itemId');
     },
     addCart: async (userId,itemId,itemSize,itemQuantity)=>{
@@ -64,7 +64,7 @@ module.exports={
     removeCart: (id) => {return Cart.findByIdAndRemove(id);},
 
     update: async (user_id,items)=>{
-        return Cart.findOneAndUpdate({user_id: user_id},{items:items});
+        return await Cart.findOneAndUpdate({user_id: user_id},{items:items});
     },
 
     getCartForOrder: (user_id) => {

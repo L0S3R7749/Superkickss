@@ -1,8 +1,10 @@
 const services = require('./orderServices');
 const cartService = require('../cart/cartService');
-const Order = require('../../models/Order');
 
 module.exports = {
+  list: (req,res,next)=>{
+    res.render('./default/index', { title: 'Order list', body: '../order/list'});
+  },
   checkout: async (req,res,next)=>{
     console.log(res.locals.user);
     const targetCart = await cartService.getCartForOrder(res.locals.user._id);
@@ -23,7 +25,7 @@ module.exports = {
       const {
         cartId,
         shippingAddress,
-        totalPrice
+        totalPrice,
       } = req.body;
       const newOrder = await services.add_order(res.locals.user._id, shippingAddress, cartId, totalPrice);
       if (newOrder) {
@@ -35,5 +37,9 @@ module.exports = {
     } catch(err) {
       console.log(err.message);
     }
-  }
+  },
+
+  thankyou: (req,res,next)=>{
+    res.render('./default/index', { title: 'Thankyou', body: '../order/thankyou'});
+  },
 }
