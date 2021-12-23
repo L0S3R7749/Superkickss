@@ -1,20 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const loginController = require('./login');
-const signupController = require('./signup');
-const forgotPwController = require('./forgotpassword');
-const infoController = require('./info');
-const changePasswordController = require('./changePassword');
+const passport = require('../../auth/passport');
+const controller = require('./authController');
 
-router.use("/login", loginController);
-router.use("/signup", signupController);
-router.use("/forgotpw", forgotPwController);
-router.use("/info", infoController);
-router.use("/changepw",changePasswordController)
+router.get('/login', controller.getLogin);
+router.post('/login', 
+    passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/auth/login',
+    failureFlash: true
+}));
+router.get('/info', controller.info);
+router.get('/forgotpw', controller.forgotPassword);
+router.get('/changepw', controller.changePassword);
+router.get('/signup', controller.getSignup);
+router.post('signup', controller.postSignup);
+router.get('/logout', controller.logout);
 
-router.get('/logout', function(req,res) {
-    req.logOut();
-    res.redirect('/');
-})
+router.get('/');
 
 module.exports=router;
