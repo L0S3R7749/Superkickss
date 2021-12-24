@@ -1125,7 +1125,8 @@ a:hover {
   border-radius: 10px;
 }
 
-.login-button button {
+.login-button button,
+.forgot-password button {
   z-index: 1;
   position: relative;
   font-size: inherit;
@@ -1139,7 +1140,8 @@ a:hover {
   transition: color 0.4s ease-in-out;
 }
 
-.login-button button::before {
+.login-button button::before,
+.forgot-password button::before {
   content: '';
   z-index: -1;
   position: absolute;
@@ -1154,12 +1156,14 @@ a:hover {
   transition: transform 0.45s ease-in-out;
 }
 
-.login-button button:hover {
+.login-button button:hover,
+.forgot-password button:hover{
   cursor: pointer;
   color: #161616;
 }
 
-.login-button button:hover::before {
+.login-button button:hover::before,
+.forgot-password button:hover::before {
   transform: translate3d(-50%, -50%, 0) scale3d(15, 15, 15);
 }
 
@@ -1277,4 +1281,22 @@ a:hover {
 
 .order-detail .total-price{
   float: right;
+}
+
+.forgot-password{
+  background-color: #fff;
+  z-index: 10;
+  border: 1px solid #ddd;
+  max-width: 70vw;
+  color: #000;
+  border-radius: 5px;
+}
+
+.forgot-password-background{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-image: url('https://chicos.vn/wp-content/uploads/2019/07/9535199410_1885848294.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }

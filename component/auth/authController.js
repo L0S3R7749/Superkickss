@@ -18,8 +18,9 @@ module.exports = {
         });
     },
     forgotPassword: (req, res, next) => {
-        res.render('./auth/forgotpassword', {
-            title: 'forgot'
+        res.render('./default/index', {
+            title: 'Forgot password',
+            body: '../auth/forgotpassword',
         });
     },
     changePassword: (req, res, next) => {
