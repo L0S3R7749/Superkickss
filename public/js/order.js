@@ -1,12 +1,12 @@
 const path = window.location.pathname;
 if (path.match('/order/checkout')) {
+
     $('#submitOrder').on('click', async e => {
         e.preventDefault();
         let cartId = $('input[name=cart_id]').val();
         let totalPrice = parseInt($('input[name=totalPrice]').val());
         let shippingAddress;
         const targetCart = await getCartById();
-        console.log(targetCart);
 
         if ($('#c_ship_different_address').prop('checked') == true)
             shippingAddress = $('input[name=diff_shippingAddress]').val();
@@ -21,11 +21,11 @@ if (path.match('/order/checkout')) {
                 shippingAddress,
                 totalPrice,
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 location.replace('/order/thankyou');
             },
-            error: function(data) {
+            error: function (data) {
                 console.log(data);
             }
         });
@@ -45,4 +45,13 @@ if (path.match('/order/checkout')) {
         });
         return cart;
     }
+
+}
+
+if (path.match('/order')) {
+
+    $('tr.order-data').on('click', e => {
+        let orderId=($(e.target).closest('.order-data').data('id'));
+        location.assign('/order/detail/'+orderId);
+    })
 }

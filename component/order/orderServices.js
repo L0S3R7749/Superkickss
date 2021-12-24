@@ -14,5 +14,15 @@ module.exports = {
         if (check)
             cartService.removeCart(cartId);
         return check;
+    },
+
+    list: async(userId)=>{
+        return await Order.find({user_id: userId}).exec();
+    },
+
+    detail: async(orderId)=>{
+        return await Order.findById(orderId)
+                          .populate('user_id')
+                          .populate('items.itemId');
     }
 }

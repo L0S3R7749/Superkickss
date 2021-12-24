@@ -1,0 +1,20 @@
+<% for (let i = 0 ; i < orders.length ; i++) { %>
+<tr class="order-data" data-id="<%= orders[i]._id%>">
+    <!-- <input type="hidden" name="order-id" class="order-id" value="<%= orders[i]._id%>"> -->
+    <td class="order-item-address">300, Phan Huy Ích, Phường 15, Quận Bình Tân, HCM</td>
+    <td class="order-item-status">
+        <% if (orders[i].status === "in progress") { %>
+            <span class="in-progress">
+                in progress
+            </span>
+        <% } else { %>
+            <span class="<%= orders[i].status%>">
+                <%= orders[i].status%>
+            </span>
+        <% } %>
+    </td>
+    <td class="order-item-createdate"><%= createdDate[i]%></td>
+    <td class="order-item-completedate">11/12/2021</td>
+    <td class="order-item-totalprice">$<%= orders[i].totalPrice%></td>
+</tr>
+<% } %>

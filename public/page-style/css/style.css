@@ -1204,3 +1204,77 @@ a:hover {
   width: 300px;
   height: 300px;
 }
+
+.order-item-status span{
+  display: inline-block;
+  width: 125px;
+  padding: 5px 10px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.order-table tr.order-data:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.order-item-status span.completed{
+  background-color: #00a316;
+}
+
+.order-item-status span.shipping{
+  background-color: #f33a02;
+}
+
+.order-item-status span.in-progress{
+  background-color: #001cb8;
+}
+
+.order-detail {
+  width: 100%;
+  border: 1px solid #ddd;
+  box-shadow: 5px 5px 10px #ddd;
+  padding: 2rem;
+}
+
+.order-detail .order-status{
+  color: #fff;
+  background-color: #ffa500;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: inline-block;
+}
+
+.order-detail h3{
+  display: block;
+  text-align: center;
+}
+
+.order-detail h3,
+.order-detail h5{
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.order-detail .order-table{
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.order-detail .order-table-head{
+  border-bottom: 2px solid #ddd;
+}
+
+.order-detail .order-table-body{
+  border-bottom: 3px solid #ccc;
+}
+
+.order-detail .order-table-body tr{
+  line-height: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-detail .total-price{
+  float: right;
+}

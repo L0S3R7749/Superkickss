@@ -2,17 +2,13 @@ const services = require('./orderServices');
 const cartService = require('../cart/cartService');
 
 module.exports = {
-  list: (req,res,next)=>{
-    res.render('./default/index', { title: 'Order list', body: '../order/list'});
-  },
-  checkout: async (req,res,next)=>{
-    console.log(res.locals.user);
+  checkout: async (req, res, next) => {
     const targetCart = await cartService.getCartForOrder(res.locals.user._id);
     let totalPrice = 0;
     for (let i = 0; i < targetCart.items.length; i++) {
       totalPrice += targetCart.items[i].itemId.price * targetCart.items[i].quantity;
     }
-    res.render('./default/index', { 
+    res.render('./default/index', {
       title: 'Checkout',
       body: '../order/checkout',
       cart: targetCart,
@@ -20,7 +16,7 @@ module.exports = {
     });
   },
 
-  create_order: async (req,res,next) => {
+  create_order: async (req, res, next) => {
     try {
       const {
         cartId,
@@ -31,15 +27,50 @@ module.exports = {
       if (newOrder) {
         await cartService.removeCart(cartId);
         res.status(201).send(newOrder);
-      }
-      else
-        res.status(500).send({message: "Error create new Order"});
-    } catch(err) {
+      } else
+        res.status(500).send({
+          message: "Error create new Order"
+        });
+    } catch (err) {
       console.log(err.message);
     }
   },
 
-  thankyou: (req,res,next)=>{
-    res.render('./default/index', { title: 'Thankyou', body: '../order/thankyou'});
+  thankyou: (req, res, next) => {
+    res.render('./default/index', {
+      title: 'Thankyou',
+      body: '../order/thankyou'
+    });
   },
+
+  list: async (req, res, next) => {
+    const orders = await services.list(res.locals.user._id);
+    let createdDate = [];
+    for (let i = 0; i < orders.length; i++) {
+      let date = new Date(orders[i].createdDate);
+      createdDate.push(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+    }
+    res.render('./default/index', {
+      title: 'Order list',
+      body: '../order/list',
+      orders: orders,
+      createdDate: createdDate
+    });
+  },
+
+  detail: async (req, res, next) => {
+    try {
+      const order = await services.detail(req.params.id);
+      let date = new Date(order.createdDate);
+      let createdDate=date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+      res.render('./default/index', {
+        title: 'Order detail',
+        body: '../order/detail',
+        order: order,
+        createdDate: createdDate,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
