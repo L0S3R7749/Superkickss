@@ -1300,3 +1300,18 @@ a:hover {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+.error-content{
+  padding: 50px;
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error-content .sad-icon{
+  width: 200px;
+  height: 200px;
+}
