@@ -9,8 +9,9 @@ if (window.location.pathname.match('/product/detail')) {
         let userId = $('input[name=userId]').val();
         let rating = parseInt($("input[type=radio][name=rating]:checked").val());
         let content = $('textarea[name=content]').val();
-        if (content == '') {
-            // console.log(`can't comment with empty string`);
+        console.log(rating);
+        console.log(content);
+        if(isNaN(rating)){
             jQuery.noConflict();
             $('#reivewNotiModal').modal('show');
             return;
