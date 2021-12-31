@@ -14,8 +14,9 @@ module.exports = {
                 home: '/product?',
                 products: productList,
                 current: page,
-                pages: pages});
-        } catch(err) {
+                pages: pages
+            });
+        } catch (err) {
             console.log(err);
         }
     },
@@ -33,9 +34,36 @@ module.exports = {
                 home: `/product/search?search=${req.query.search}&`,
                 products: productList,
                 current: page,
-                pages: pages});
-        } catch(err) {
+                pages: pages
+            });
+        } catch (err) {
             console.log(err);
+        }
+    },
+
+    filter: async (req, res) => {
+        try {
+            const regex = /[.\-\ *+?^${}()|[\]\\]/g;
+            const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
+            const gender = (req.query.gender === undefined) ? '' : req.query.gender;
+            const type = (req.query.type === undefined) ? '' : req.query.type;
+            let price = req.query.price.split(regex);
+            const min = price[1];
+            const max = price[price.length - 1];
+            const productList = await services.filter_list(gender, type, min, max, page);
+            const countAll = await services.filterCount(gender, type, min, max);
+            const pages = Math.ceil(countAll / 9);
+            price=`%24${min}+-+%24${max}`
+            res.render('./default/index', {
+                title: 'Search Results',
+                body: '../product/shop',
+                home: `/product/filter?gender=${gender}&type=${type}&price=${price}&`,
+                products: productList,
+                current: page,
+                pages: pages,
+            });
+        } catch (err) {
+
         }
     },
 
@@ -48,41 +76,41 @@ module.exports = {
                 body: '../product/detail',
                 product: targetProduct,
             });
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
     },
 
-    rate: async (req,res)=>{
-        try{
+    rate: async (req, res) => {
+        try {
             const {
                 productId,
                 userId,
                 rating,
                 content,
-            }=req.body;
+            } = req.body;
             const comment = await services.rating(productId, userId,
-                                                rating, content);
+                rating, content);
             res.status(201).json(comment);
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     },
 
-    getRatings: async (req,res) =>{
+    getRatings: async (req, res) => {
         const productId = req.params.id;
-        try{
-            let perPage=5;
+        try {
+            let perPage = 5;
             let page = !Number.isNaN(req.query.page) && req.query.page > 0 ? Number.parseInt(req.query.page) : 1;
-            let getRating= await services.getRating(productId,page,perPage);
-            let totalPage=Math.ceil(getRating.allComment.length/perPage);
-            const respone={
+            let getRating = await services.getRating(productId, page, perPage);
+            let totalPage = Math.ceil(getRating.allComment.length / perPage);
+            const respone = {
                 perPage,
                 totalPage,
-                rates: getRating.comments, 
+                rates: getRating.comments,
             }
             res.status(200).json(respone);
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     },

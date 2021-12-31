@@ -12,5 +12,7 @@ router.post('/rate', controller.rate);
 
 router.get('/:id/ratings', controller.getRatings);
 
+router.get('/filter',controller.filter);
+
 router.get('/', controller.list);
 module.exports = router;
