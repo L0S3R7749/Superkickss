@@ -1,4 +1,5 @@
 const User = require('../../models/User');
+const Token = require('../../models/Token');
 
 module.exports={
     findUser: (username,email,phone) =>{
@@ -10,6 +11,7 @@ module.exports={
             ]},
             {userRight: 'user'}]}).lean();
     },
+    
     createUser: ({fullname, username, hashpassword, email, phone})=>{
         return User.create({
             fullname,
@@ -19,26 +21,18 @@ module.exports={
             phoneNumber: phone,
             userRight: 'user'
         });
+    },
+    
+    findUserByEmail: (email)=>{
+        return User.findOne({
+            email: email,
+            userRight: 'user',
+        });
+    },
+
+    findToken: (token)=>{
+        return Token.findOne({
+            token: token,
+        });
     }
 };
-
-// exports.findUser = ({username, email, phone}) => {
-//     return User.findOne({$and: [
-//         {$or: [
-//             {username: username},
-//             {email: email},
-//             {phoneNumber: phone}
-//         ]},
-//         {userRight: 'user'}]}).lean();
-// }
-
-// exports.createUser = ({fullname, username, hashpassword, email, phone}) => {
-//     return User.create({
-//         fullname,
-//         username,
-//         password: hashpassword,
-//         email,
-//         phoneNumber: phone,
-//         userRight: 'user'
-//     });
-// }

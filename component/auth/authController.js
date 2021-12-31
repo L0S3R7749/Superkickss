@@ -1,6 +1,7 @@
 const services = require('./authServices');
-const passport = require('../../auth/passport');
 const bcrypt = require('bcrypt');
+const nodemailer = require('../../auth/nodemailer');
+const crypto = require('crypto');
 
 module.exports = {
     getLogin: (req, res, next) => {
@@ -17,12 +18,42 @@ module.exports = {
             user: res.locals.user
         });
     },
-    forgotPassword: (req, res, next) => {
+    viewForgotPassword: (req, res, next) => {
         res.render('./default/index', {
             title: 'Forgot password',
             body: '../auth/forgotpassword',
+            message: '',
         });
     },
+
+    forgotPassword: async (req,res,next)=>{
+        const user=await services.findUserByEmail(req.body.email);
+        if(user){
+            const token = crypto.randomBytes(16).toString('hex');
+            nodemailer.sendResetPassword(req.body.email,token);
+            res.status(200);
+        }else{
+            res.status(400).json({message: 'Cannot find this account'});
+        }
+    },
+
+    resetPassword: async (req,res,next)=>{
+        const token = req.query.token;
+        if(token){
+            const checkToken= await services.findToken(token);
+            if(checkToken){
+                res.render('./default/index', {
+                    title: 'Reset password',
+                    body: '../auth/resetpassword',
+                });
+            }else{
+
+            }
+        }else{
+
+        }
+    },
+
     changePassword: (req, res, next) => {
         res.render('./default/index', {
             title: 'Change password',
