@@ -18,7 +18,9 @@ router.get('/forgot-password', controller.viewForgotPassword);
 
 router.post('/forgot-password', controller.forgotPassword);
 
-router.get('/reset-password', controller.resetPassword);
+router.get('/reset-password', controller.viewResetPassword);
+
+router.post('/reset-password', controller.resetPassword);
 
 router.get('/changepw', controller.changePassword);
 
