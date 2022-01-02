@@ -23,21 +23,15 @@ if (window.location.pathname.match('/auth/forgot-password')){
     })
 }
 
-//validator for confirm password
-if (window.location.pathname.match('/auth/reset-password')){
-    $('#submit-reset-password').on('click', e=>{
-        e.preventDefault();
-        const password=$('input[name=password]').val();
-        const confirmPassword=$('input[name=confirmPassword]').val();
-        if(password===confirmPassword){
-            $('#submit-password').submit();
+if (window.location.pathname.match('/auth/signup')){
+    $(document).ready(async () => {
+        const url=`/auth/signup`;
+        let response= await fetch(url);
+        if(response.ok){
+            let json=await response.json();
+            console.log(json);
         }else{
-            $('.error').empty();
-                let html= `<div class="error">
-                            <i class="fas fa-times-circle me-2"></i>
-                            <span>Not correct password</span>
-                        </div>`
-            $('.error').append(html);
+            console.log('bac');
         }
-    })
+    });
 }

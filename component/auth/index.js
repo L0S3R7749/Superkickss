@@ -26,9 +26,15 @@ router.get('/changepw', controller.changePassword);
 
 router.get('/signup', controller.getSignup);
 
-router.post('signup', controller.postSignup);
+router.post('/signup', controller.postSignup);
+
+router.get('/verify', controller.verify);
 
 router.get('/logout', controller.logout);
+
+// router.get('/email', (req,res)=>{
+//     res.render('./auth/email')
+// })
 
 router.get('/');
 

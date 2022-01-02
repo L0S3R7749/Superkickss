@@ -15,6 +15,8 @@ passport.use(new LocalStrategy(
             }
             if(user.isLock===true){
                 return done(null, false, {message : 'Your account has been locked.'});
+            }if(user.isVerified===false){
+                return done(null, false, {message : 'Your account has not been verified.'});
             }
             return done(null, user);
         } catch (err) {

@@ -1098,6 +1098,13 @@ a:hover {
   margin-bottom: 20px;
 }
 
+.error{
+  border: 1px solid #f44336;
+  color: #f44336;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+
 .item-name,
 .item-desc {
   overflow: hidden;
@@ -1315,3 +1322,4 @@ a:hover {
   width: 200px;
   height: 200px;
 }
+

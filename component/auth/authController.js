@@ -10,6 +10,7 @@ module.exports = {
             message: req.flash('error')
         });
     },
+
     info: (req, res, next) => {
         res.render('./default/index', {
             title: 'User info',
@@ -17,6 +18,7 @@ module.exports = {
             user: res.locals.user
         });
     },
+
     viewForgotPassword: (req, res, next) => {
         res.render('./default/index', {
             title: 'Forgot password',
@@ -26,14 +28,14 @@ module.exports = {
     },
 
     forgotPassword: async (req, res, next) => {
-        const user = await services.findUserByEmail(req.body.email);
-        if (user) {
+        const account = await services.findUserByEmail(req.body.email);
+        if (account) {
             const token = jwt.sign({
-                user
+                account
             }, process.env.PRIVATE_KEY, {
                 expiresIn: '10m'
             });
-            services.sendResetPassword(req.body.email,token);
+            services.sendResetPassword(req.body.email, token);
             res.status(200);
         } else {
             res.status(400).json({
@@ -46,36 +48,51 @@ module.exports = {
         const token = req.query.token;
         if (token) {
             res.render('./default/index', {
-                    title: 'Reset password',
-                    body: '../auth/resetpassword',
-                });
-        }
-        else {
+                title: 'Reset password',
+                body: '../auth/resetpassword',
+                message: req.flash('error'),
+            });
+        } else {
 
         }
     },
 
-    resetPassword: async (req,res,next)=>{
-        const {token}=req.query;
-        const password=req.body.password;
-        try{
+    resetPassword: async (req, res, next) => {
+        const { token } = req.query;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+        const regex = /[.\-\:><= *+?^${}()|[\]\\]/g;
+
+        if (password !== confirmPassword) {
+            req.flash('error', 'Your confirm password not correct');
+            res.redirect('/auth/reset-password?token=' + token);
+            return;
+        } else if (password.length < 6 || password.length > 16) {
+            req.flash('error', 'Your password must have at least 6 characters or no more than 16 characters');
+            res.redirect('/auth/reset-password?token=' + token);
+            return;
+        } else if (password.match(regex)) {
+            req.flash('error', 'Your password must not have special characters');
+            res.redirect('/auth/reset-password?token=' + token);
+            return;
+        }
+        try {
             const hashPassword = bcrypt.hashSync(password, 10);
-            if(token){
+            if (token) {
                 const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
                 if (!decodedToken) {
                     // throw { message: "Token validate fail", status: 500 };
                     return;
                 }
-                const user=await services.resetPassword(decodedToken.user._id,hashPassword);
-                if(user){
+                const account = await services.resetPassword(decodedToken.account._id, hashPassword);
+                if (account) {
                     res.render('./default/index', {
                         title: 'Login',
                         body: '../auth/login',
-                        message: req.flash('error')
                     });
                 }
             }
-        }catch(err){
+        } catch (err) {
 
         }
     },
@@ -94,6 +111,7 @@ module.exports = {
             message: req.flash('error')
         });
     },
+
     postSignup: async (req, res, next) => {
         const {
             fullname,
@@ -108,28 +126,52 @@ module.exports = {
             req.flash('error', 'Confirm-password does not match!');
             res.redirect('/auth/signup');
         } else {
-            const checkExist = await services.findUser({
-                username,
-                email,
-                phone
-            });
+            const checkExist = await services.findUser(username, email, phone);
 
             if (checkExist) {
                 req.flash('error', 'This user already exists!');
                 res.redirect('/auth/signup');
             } else {
                 const hashpassword = bcrypt.hashSync(password, 10);
-                await services.createUser({
+                const account=await services.createUser({
                     fullname,
                     username,
                     hashpassword,
                     email,
                     phone
                 });
-                res.redirect('/');
+                const token = jwt.sign({
+                    account
+                }, process.env.PRIVATE_KEY, {
+                    expiresIn: '10m'
+                });
+                services.sendVerify(email, token);
+                res.render('./default/index', {
+                    title: 'Change password',
+                    body: '../auth/notification',
+                    message: 'Register successfully, check email to verify account',
+                });
             }
         }
     },
+
+    verify: async (req, res, next) => {
+        const {token} = req.query;
+        if(token){
+            const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
+            if (!decodedToken) {
+                // throw { message: "Token validate fail", status: 500 };
+                return;
+            }
+            const account = await services.verify(decodedToken.account._id);
+            res.render('./default/index', {
+                title: 'Change password',
+                body: '../auth/notification',
+                message: 'Verify successfully',
+            });
+        }
+    },
+
     logout: (req, res, next) => {
         req.logOut();
         res.redirect('/');

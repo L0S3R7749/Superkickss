@@ -19,7 +19,6 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.2",
     "faker": "^5.5.3",
-    "googleapis": "^92.0.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
