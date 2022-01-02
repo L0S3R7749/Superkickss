@@ -94,5 +94,9 @@ module.exports={
 
     verify: (_id)=>{
         return User.findByIdAndUpdate(_id,{$set: {isVerified: true}});
+    },
+
+    changePassword: (_id,password)=>{
+        return User.findByIdAndUpdate(_id,{$set: {password: password}});
     }
 };

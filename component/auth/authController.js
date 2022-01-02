@@ -58,7 +58,9 @@ module.exports = {
     },
 
     resetPassword: async (req, res, next) => {
-        const { token } = req.query;
+        const {
+            token
+        } = req.query;
         const password = req.body.password;
         const confirmPassword = req.body.confirmPassword;
         const regex = /[.\-\:><= *+?^${}()|[\]\\]/g;
@@ -66,15 +68,12 @@ module.exports = {
         if (password !== confirmPassword) {
             req.flash('error', 'Your confirm password not correct');
             res.redirect('/auth/reset-password?token=' + token);
-            return;
         } else if (password.length < 6 || password.length > 16) {
             req.flash('error', 'Your password must have at least 6 characters or no more than 16 characters');
             res.redirect('/auth/reset-password?token=' + token);
-            return;
         } else if (password.match(regex)) {
             req.flash('error', 'Your password must not have special characters');
             res.redirect('/auth/reset-password?token=' + token);
-            return;
         }
         try {
             const hashPassword = bcrypt.hashSync(password, 10);
@@ -97,11 +96,40 @@ module.exports = {
         }
     },
 
-    changePassword: (req, res, next) => {
+    viewChangePassword: (req, res, next) => {
         res.render('./default/index', {
             title: 'Change password',
-            body: '../auth/changepassword'
+            body: '../auth/changepassword',
+            message: req.flash('error'),
         });
+    },
+
+    changePassword: async (req,res,next)=>{
+        const account=res.locals.user;
+        const currentPassword=req.body.currentPassword;
+        const newPassword = req.body.newPassword;
+        const confirmPassword = req.body.confirmPassword;
+        const regex = /[.\-\:><= *+?^${}()|[\]\\]/g;
+        const hashPassword = bcrypt.hashSync(newPassword, 10);
+        if(currentPassword.length==0||newPassword.length==0||confirmPassword.length==0){
+            req.flash('error', 'Please fill all field.');
+            res.redirect('/auth/change-password');
+        }else if(!bcrypt.compareSync(currentPassword,account.password)){
+            req.flash('error', 'Your current password not correct');
+            res.redirect('/auth/change-password');
+        }else if (newPassword !== confirmPassword) {
+            req.flash('error', 'Your confirm password not correct');
+            res.redirect('/auth/change-password');
+        } else if (newPassword.length < 6 || newPassword.length > 16) {
+            req.flash('error', 'Your password must have at least 6 characters or no more than 16 characters');
+            res.redirect('/auth/change-password');
+        } else if (newPassword.match(regex)) {
+            req.flash('error', 'Your password must not have special characters');
+            res.redirect('/auth/change-password');
+        }else{
+            await services.changePassword(account._id,hashPassword);
+            res.redirect('/');
+        }
     },
 
     getSignup: (req, res, next) => {
@@ -133,7 +161,7 @@ module.exports = {
                 res.redirect('/auth/signup');
             } else {
                 const hashpassword = bcrypt.hashSync(password, 10);
-                const account=await services.createUser({
+                const account = await services.createUser({
                     fullname,
                     username,
                     hashpassword,
@@ -156,19 +184,23 @@ module.exports = {
     },
 
     verify: async (req, res, next) => {
-        const {token} = req.query;
-        if(token){
+        const {
+            token
+        } = req.query;
+        if (token) {
             const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
             if (!decodedToken) {
                 // throw { message: "Token validate fail", status: 500 };
                 return;
             }
             const account = await services.verify(decodedToken.account._id);
-            res.render('./default/index', {
-                title: 'Change password',
-                body: '../auth/notification',
-                message: 'Verify successfully',
-            });
+            if (account) {
+                res.render('./default/index', {
+                    title: 'Change password',
+                    body: '../auth/notification',
+                    message: 'Verify successfully',
+                });
+            }
         }
     },
 
