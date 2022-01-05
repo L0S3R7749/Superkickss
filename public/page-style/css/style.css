@@ -1238,6 +1238,10 @@ a:hover {
   background-color: #f33a02;
 }
 
+.order-item-status span.cancel{
+  background-color: #ff0000;
+}
+
 .order-item-status span.in-progress{
   background-color: #001cb8;
 }

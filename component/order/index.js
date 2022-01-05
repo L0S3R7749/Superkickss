@@ -10,6 +10,8 @@ router.get('/thankyou', controller.thankyou);
 
 router.get('/detail/:id', controller.detail);
 
+router.post('/cancel', controller.cancelOrder);
+
 router.get('/', controller.list);
 
 module.exports = router;
