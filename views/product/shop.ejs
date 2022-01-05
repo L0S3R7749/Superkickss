@@ -12,9 +12,9 @@
     <div class="row mb-5">
       <div class="col-md-3 order-1 mb-5 mb-md-0">
         <div class="border p-4 rounded mb-4">
-          <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
           <ul class="list-unstyled mb-0">
             <form action="/product/filter" method="GET">
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
               <div class="gender">
                 <h6>Gender</h6>
                 <div class="form-check form-check-inline">
@@ -30,7 +30,7 @@
                   <label class="form-check-label" for="unisexRadio">Unisex</label>
                 </div>
               </div>
-              <div class="type">
+              <div class="type mb-3">
                 <h6>Type</h6>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="type" id="sportRadio" value="Sport">
@@ -43,6 +43,44 @@
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="type" id="streetRadio" value="Street">
                   <label class="form-check-label" for="streetRadio">Street</label>
+                </div>
+              </div>
+              <div class="brand mb-3">
+                <h6>Brand</h6>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="type" id="adidasRadio" value="Adidas">
+                  <label class="form-check-label" for="adidasRadio">Adidas</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="type" id="nikeRadio" value="Nike">
+                  <label class="form-check-label" for="nikeRadio">Nike</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="type" id="otherBrandRadio" value="Other">
+                  <label class="form-check-label" for="otherBrandRadio">Other</label>
+                </div>
+              </div>
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Reference</h3>
+              <div class="sort-by-name">
+                <h6>Name</h6>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="nameSort" id="azRadio" value="1">
+                  <label class="form-check-label" for="azRadio">A -> Z</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="nameSort" id="zaRadio" value="-1">
+                  <label class="form-check-label" for="zaRadio">Z -> A</label>
+                </div>
+              </div>
+              <div class="sort-by-price">
+                <h6>Price</h6>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="priceSort" id="lowRadio" value="1">
+                  <label class="form-check-label" for="lowRadio">Low to high</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="priceSort" id="highRadio" value="-1">
+                  <label class="form-check-label" for="highRadio">High to low</label>
                 </div>
               </div>
               <div class="mb-3 mt-3">
