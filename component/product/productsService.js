@@ -22,48 +22,52 @@ module.exports = {
             .limit(perPage);
     },
 
-    filter_list: (gender, type, min, max, page = 1, perPage = 9) => {
-        if (gender == '' && type == '') {
-            return Product.find({
-                    price: {
-                        $gt: min,
-                        $lt: max
-                    }
-                })
-                .skip((perPage * page) - perPage)
-                .limit(perPage);
-        } else if (gender == '') {
-            return Product.find({
-                    'category.type': type,
-                    price: {
-                        $gt: min,
-                        $lt: max
-                    }
-                })
-                .skip((perPage * page) - perPage)
-                .limit(perPage);
-        } else if (type == '') {
-            return Product.find({
-                    'category.gender': gender,
-                    price: {
-                        $gt: min,
-                        $lt: max
-                    }
-                })
-                .skip((perPage * page) - perPage)
-                .limit(perPage);
-        } else {
-            return Product.find({
-                    'category.gender': gender,
-                    'category.type': type,
-                    price: {
-                        $gt: min,
-                        $lt: max
-                    }
-                })
-                .skip((perPage * page) - perPage)
-                .limit(perPage);
+    filter_list: (gender, type, min, max, nameSort, priceSort, page = 1, perPage = 9) => {
+        let sortQuery={};
+        if(nameSort===0&&priceSort===0){
+
+        }else if(nameSort===0) {
+            sortQuery={
+                price: priceSort,
+            }
+        }else if(priceSort===0){
+            sortQuery={
+                name: nameSort,
+            }
+        }else{
+            sortQuery={
+                name: nameSort,
+                price: priceSort,
+            }
         }
+        
+        let myQuery = {};
+        myQuery = {
+            $and: [{
+                    'category.gender': {
+                        $regex: gender,
+                        $options: 'i',
+                    }
+                },
+                {
+                    'category.type': {
+                        $regex: type,
+                        $options: 'i',
+                    }
+                },
+                {
+                    'price': {
+                        $gte: min,
+                        $lte: max,
+                    }
+                }
+            ]
+        };
+        return Product
+            .find(myQuery)
+            .sort(sortQuery)
+            .skip((perPage * page) - perPage)
+            .limit(perPage);
     },
 
     customCount: (searchString) => {
@@ -76,40 +80,30 @@ module.exports = {
             } : {});
     },
 
-    filterCount: (gender,type,min,max)=>{
-        if (gender == '' && type == '') {
-            return Product.countDocuments({
-                    price: {
-                        $gt: min,
-                        $lt: max
+    filterCount: (gender, type, min, max) => {
+        let myQuery={};
+        myQuery = {
+            $and: [{
+                    'category.gender': {
+                        $regex: gender,
+                        $options: 'i',
                     }
-                })
-        } else if (gender == '') {
-            return Product.countDocuments({
-                    'category.type': type,
-                    price: {
-                        $gt: min,
-                        $lt: max
+                },
+                {
+                    'category.type': {
+                        $regex: type,
+                        $options: 'i',
                     }
-                })
-        } else if (type == '') {
-            return Product.countDocuments({
-                    'category.gender': gender,
-                    price: {
-                        $gt: min,
-                        $lt: max
+                },
+                {
+                    'price': {
+                        $gte: min,
+                        $lte: max,
                     }
-                })
-        } else {
-            return Product.countDocuments({
-                    'category.gender': gender,
-                    'category.type': type,
-                    price: {
-                        $gt: min,
-                        $lt: max
-                    }
-                })
+                }
+            ]
         }
+        return Product.countDocuments(myQuery);
     },
 
     findSingleProduct: (id) => {

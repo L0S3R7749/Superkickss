@@ -50,7 +50,9 @@ module.exports = {
             let price = req.query.price.split(regex);
             const min = price[1];
             const max = price[price.length - 1];
-            const productList = await services.filter_list(gender, type, min, max, page);
+            const nameSort = (req.query.nameSort === undefined) ? 0 : parseInt(req.query.nameSort);
+            const priceSort = (req.query.priceSort === undefined) ? 0 : parseInt(req.query.priceSort);
+            const productList = await services.filter_list(gender, type, min, max, nameSort , priceSort , page);
             const countAll = await services.filterCount(gender, type, min, max);
             const pages = Math.ceil(countAll / 9);
             price=`%24${min}+-+%24${max}`
