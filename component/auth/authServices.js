@@ -98,5 +98,9 @@ module.exports={
 
     changePassword: (_id,password)=>{
         return User.findByIdAndUpdate(_id,{$set: {password: password}});
+    },
+
+    changeAvatar: (_id,url)=>{
+        return User.findByIdAndUpdate(_id,{$set: {avatar: url}});
     }
 };

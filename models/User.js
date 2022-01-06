@@ -40,14 +40,19 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: false,
     },
-    image: {
-        url: {
-            type: String
-        },
-        cloudinary_id: {
-            type: String
-        }
-    }
+    avatar:{
+        type: String,
+        default: 'https://res.cloudinary.com/l3soer/image/upload/v1641452386/useravatarpng_bszyns.png',
+    },
+    // avatar: {
+    //     url: {
+    //         type: String,
+    //         default: 'https://res.cloudinary.com/l3soer/image/upload/v1641452386/useravatarpng_bszyns.png',
+    //     },
+    //     cloudinary_id: {
+    //         type: String
+    //     }
+    // }
 });
 
 module.exports = mongoose.model('User', userSchema);

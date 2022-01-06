@@ -1,46 +1,57 @@
 <div>
-    <div class="container user-info">
-        <form>
-            <div class="row mt-3">
-                <div class="col-md-4">
+    <div class="container user-info mt-5 mb-5">
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <form action="/auth/change-avatar" enctype="multipart/form-data" method="post">
                     <div class="pt-3 pl-3 mr-5">
                         <div class="col-md-9">
                             <h2>Avatar</h2>
-                            <div class="user-avatar"></div>
+                            <div class="user-avatar">
+                                <img src="<%= user.avatar%>" alt="Avatar">
+                            </div>
                         </div>
-                        <!-- <a href="" class="btn ml-3 mt-5">Change avatar</a> -->
-                        <button class="btn ml-3 mt-5">Change avatar</button>
+                        <div class="ml-3 mt-3 form-group">
+                            <label for="avatar">Choose your avatar</label>
+                            <input type="file" class="form-control-file" name="avatar" id="avatar">
+                        </div>
+                        <button type="submit" class="btn ml-3 mt-2">Change avatar</button>
                     </div>
-                </div>
-                <div class="col-md-8 pt-3 pl-5">
-                    <div class="col-md-10 mb-2">
+                </form>
+            </div>
+            <div class="col-md-8 pt-3 pl-5">
+                    <form>
+                    <div class="col-md-12 mb-2">
                         <label>Full name</label>
-                        <input class="form-control" type="text" name="fullname" placeholder="Fullname" value='<%= user.fullname%>'/>
+                        <input class="form-control" type="text" name="fullname" placeholder="Fullname"
+                            value='<%= user.fullname%>' />
                     </div>
-                    <div class="col-md-10 mb-2">
+                    <div class="col-md-12 mb-2">
                         <label>User name</label>
-                        <input class="form-control" type="text" name="username" placeholder="Username"
-                            disabled="true" value='<%= user.username%>'/>
+                        <input class="form-control" type="text" name="username" placeholder="Username" disabled="true"
+                            value='<%= user.username%>' />
                     </div>
-                    <div class="col-md-10 mb-2">
+                    <div class="col-md-12 mb-2">
                         <label>Email</label>
-                        <input class="form-control" type="email" name="email" placeholder="Email" disabled="true" value='<%= user.email%>'/>
+                        <input class="form-control" type="email" name="email" placeholder="Email" disabled="true"
+                            value='<%= user.email%>' />
                     </div>
-                    <div class="col-md-10 mb-2">
+                    <div class="col-md-12 mb-2">
                         <label>Phone</label>
-                        <input class="form-control" type="text" name="phone" placeholder="Phone" disabled="true" value='<%= user.phoneNumber%>'/>
+                        <input class="form-control" type="text" name="phone" placeholder="Phone" disabled="true"
+                            value='<%= user.phoneNumber%>' />
                     </div>
-                    <div class="col-md-10 mb-2">
+                    <div class="col-md-12 mb-2">
                         <label>Address</label>
-                        <input class="form-control" type="text" name="address" placeholder="Address" value='<%= user.address%>'/>
+                        <input class="form-control" type="text" name="address" placeholder="Address"
+                            value='<%= user.address%>' />
                     </div>
-                    <div class="col-md-10 mt-5 d-flex justify-content-between">
-                        <button type="submit" class="col-md-5 btn btn-primary">Edit Info</button>
-                        <a href="/auth/change-password" class="btn col-md-5 btn-primary">Edit pass</a>
+                    <div class="col-md-12 d-flex flex-wrap justify-content-evenly">
+                        <button type="submit" class="col-sm-5 mt-5 btn btn-primary">Edit Info</button>
+                        <a href="/auth/change-password" class="btn mt-5 col-sm-5 btn-primary">Edit pass</a>
                         <!-- <button type="submit" class="col-md-5 btn btn-primary">Change password</button> -->
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>

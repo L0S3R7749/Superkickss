@@ -22,7 +22,7 @@ module.exports = {
             .limit(perPage);
     },
 
-    filter_list: (gender, type, min, max, nameSort, priceSort, page = 1, perPage = 9) => {
+    filter_list: (gender, type, brand, min, max, nameSort, priceSort, page = 1, perPage = 9) => {
         let sortQuery={};
         if(nameSort===0&&priceSort===0){
 
@@ -56,6 +56,12 @@ module.exports = {
                     }
                 },
                 {
+                    'brand': {
+                        $regex: brand,
+                        $options: 'i',
+                    }
+                },
+                {
                     'price': {
                         $gte: min,
                         $lte: max,
@@ -80,7 +86,7 @@ module.exports = {
             } : {});
     },
 
-    filterCount: (gender, type, min, max) => {
+    filterCount: (gender, type, brand, min, max) => {
         let myQuery={};
         myQuery = {
             $and: [{
@@ -92,6 +98,12 @@ module.exports = {
                 {
                     'category.type': {
                         $regex: type,
+                        $options: 'i',
+                    }
+                },
+                {
+                    'brand': {
+                        $regex: brand,
                         $options: 'i',
                     }
                 },

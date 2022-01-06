@@ -1,6 +1,8 @@
 const services = require('./authServices');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const formidable = require('formidable');
+const {uploadImage} = require('../../middleware/cloudinary');
 
 module.exports = {
     getLogin: (req, res, next) => {
@@ -104,20 +106,20 @@ module.exports = {
         });
     },
 
-    changePassword: async (req,res,next)=>{
-        const account=res.locals.user;
-        const currentPassword=req.body.currentPassword;
+    changePassword: async (req, res, next) => {
+        const account = res.locals.user;
+        const currentPassword = req.body.currentPassword;
         const newPassword = req.body.newPassword;
         const confirmPassword = req.body.confirmPassword;
         const regex = /[.\-\:><= *+?^${}()|[\]\\]/g;
         const hashPassword = bcrypt.hashSync(newPassword, 10);
-        if(currentPassword.length==0||newPassword.length==0||confirmPassword.length==0){
+        if (currentPassword.length == 0 || newPassword.length == 0 || confirmPassword.length == 0) {
             req.flash('error', 'Please fill all field.');
             res.redirect('/auth/change-password');
-        }else if(!bcrypt.compareSync(currentPassword,account.password)){
+        } else if (!bcrypt.compareSync(currentPassword, account.password)) {
             req.flash('error', 'Your current password not correct');
             res.redirect('/auth/change-password');
-        }else if (newPassword !== confirmPassword) {
+        } else if (newPassword !== confirmPassword) {
             req.flash('error', 'Your confirm password not correct');
             res.redirect('/auth/change-password');
         } else if (newPassword.length < 6 || newPassword.length > 16) {
@@ -126,10 +128,24 @@ module.exports = {
         } else if (newPassword.match(regex)) {
             req.flash('error', 'Your password must not have special characters');
             res.redirect('/auth/change-password');
-        }else{
-            await services.changePassword(account._id,hashPassword);
+        } else {
+            await services.changePassword(account._id, hashPassword);
             res.redirect('/');
         }
+    },
+
+    changeAvatar: async (req, res, next) => {
+        const form = formidable({});
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            // const result= await cloudinary.uploader.upload(files.avatar.filepath);
+            const result = await uploadImage(files.avatar.filepath);
+            await services.changeAvatar(res.locals.user._id,result.url);
+            res.redirect('/auth/info');
+        });
     },
 
     getSignup: (req, res, next) => {
