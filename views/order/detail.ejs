@@ -1,20 +1,24 @@
-<div class="container d-flex justify-content-center">
+<div class="container d-flex justify-content-center mb-5">
     <div class="col-md-10">
         <div class="row">
             <div class="order-detail">
                 <% if (order.status === "in progress") { %>
-                    <span class="order-status order-cancel">
-                        In Progress
-                    </span>
+                <span class="order-status order-cancel">
+                    In Progress
+                </span>
                 <% } else { %>
                     <% if (order.status === "shipping") { %>
-                        <span class="order-status order-shipping">
-                            Shipping
-                        </span>
-                    <% } else { %>
-                        <span class="order-status order-done">
-                            Completed
-                        </span>
+                    <span class="order-status order-shipping">
+                        Shipping
+                    </span>
+                    <% } else if(order.status === "completed"){ %>
+                    <span class="order-status order-done">
+                        Completed
+                    </span>
+                    <% } else {%>
+                    <span class="order-status order-done">
+                        Cancel
+                    </span>
                     <% } %>
                 <% } %>
                 <h3 class="my-4">
@@ -27,9 +31,9 @@
                 </div>
                 <h5 class="mt-3">Invoice Id</h5>
                 <span class="col-sm-6"><%= order._id%></span>
-                <h5 class="mt-3">Create Date</h5>    
+                <h5 class="mt-3">Create Date</h5>
                 <p class="col-sm-6"><%= createdDate%></p>
-                <h5 class="mt-3">Product list</h5>    
+                <h5 class="mt-3">Product list</h5>
                 <table class="order-table">
                     <thead class="order-table-head">
                         <tr>
@@ -40,11 +44,12 @@
                     </thead>
                     <tbody class="order-table-body">
                         <% for (let i = 0; i < order.items.length; i++) { %>
-                            <tr>
-                                <td class="col-6"><%= order.items[i].itemId.name %> - <%=order.items[i].itemSize %> - $<%= order.items[i].itemId.price%></td>
-                                <td class="col-3"><%= order.items[i].quantity %></td>
-                                <td class="col-3">$<%= order.items[i].itemId.price * order.items[i].quantity %></td>
-                            </tr>
+                        <tr>
+                            <td class="col-6"><%= order.items[i].itemId.name %> - <%=order.items[i].itemSize %> -
+                                $<%= order.items[i].itemId.price%></td>
+                            <td class="col-3"><%= order.items[i].quantity %></td>
+                            <td class="col-3">$<%= order.items[i].itemId.price * order.items[i].quantity %></td>
+                        </tr>
                         <% } %>
                     </tbody>
                     <tr>
@@ -53,9 +58,16 @@
                         <td class="col-3">$<%= order.totalPrice %></td>
                     </tr>
                 </table>
-                <h5 class="mt-3">Note</h5>
-                <p class="col-sm-6 mb-3">None</p>
+                <div class="mt-3">
+                    <% if (order.status !== "cancel" && order.status !== "completed" ) {%>
+                    <form class="mb-3" action="/order/cancel" method="post">
+                        <input type="hidden" name="orderId" value="<%= order._id%>">
+                        <button class="float-right mr-3 btn btn-danger">Cancel order</button>
+                    </form>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
+
 </div>

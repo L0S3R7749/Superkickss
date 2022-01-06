@@ -24,5 +24,9 @@ module.exports = {
         return await Order.findById(orderId)
                           .populate('user_id')
                           .populate('items.itemId');
+    },
+
+    cancelOrder: (orderId)=>{
+        return Order.findByIdAndUpdate(orderId,{status: 'cancel'});
     }
 }

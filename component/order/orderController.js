@@ -72,5 +72,11 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
-  }
+  },
+
+  cancelOrder: async (req,res,next)=>{
+    console.log(req.body.orderId);
+    await services.cancelOrder(req.body.orderId);
+    res.redirect('/order/detail/'+req.body.orderId);
+  },
 }
