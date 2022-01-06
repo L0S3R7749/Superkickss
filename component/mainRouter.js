@@ -4,7 +4,7 @@ const authRouter = require('./auth');
 const shopRouter = require('./product');
 const orderRouter = require('./order');
 const cartRouter = require('./cart');
-const checkAuth = require('../auth/check-auth');
+const checkAuth = require('../middleware/check-auth');
 
 const express = require('express');
 const router = express.Router();

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../../auth/passport');
+const passport = require('../../middleware/passport');
 const controller = require('./authController');
-const checkAuth = require('../../auth/check-auth');
-
+const checkAuth = require('../../middleware/check-auth');
+const upload = require('../../middleware/multer');
 
 router.get('/login', controller.getLogin);
 
@@ -27,6 +27,8 @@ router.post('/reset-password', controller.resetPassword);
 router.get('/change-password',checkAuth.checkAuthentication, controller.viewChangePassword);
 
 router.post('/change-password',checkAuth.checkAuthentication, controller.changePassword);
+
+router.post('/change-avatar', controller.changeAvatar);
 
 router.get('/signup', controller.getSignup);
 
