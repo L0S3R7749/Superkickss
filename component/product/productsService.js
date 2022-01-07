@@ -146,4 +146,11 @@ module.exports = {
         };
         return respone;
     },
+
+    findRandomProductByBrand: (_id,brand) =>{
+        return Product.aggregate([
+            {$match: {brand: brand} },
+            {$sample: {size: 5} }
+        ]);
+    },
 };

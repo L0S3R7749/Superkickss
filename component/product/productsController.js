@@ -74,10 +74,13 @@ module.exports = {
         try {
             const idTarget = req.query.id;
             const targetProduct = await services.findSingleProduct(idTarget);
+            /*find ramdom product by brand*/
+            const randomProducts = await services.findRandomProductByBrand(targetProduct._id,targetProduct.brand);
             res.render('./default/index', {
                 title: 'Product Detail',
                 body: '../product/detail',
                 product: targetProduct,
+                randomProducts: randomProducts,
             });
         } catch (err) {
             console.log(err);
