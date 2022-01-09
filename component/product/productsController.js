@@ -1,7 +1,7 @@
 const services = require('./productsService');
 
 module.exports = {
-    list: async (req, res) => {
+    list: async (req, res, next) => {
         try {
             const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
             const productList = await services.list(page);
@@ -17,11 +17,11 @@ module.exports = {
                 pages: pages
             });
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     },
 
-    search: async (req, res) => {
+    search: async (req, res, next) => {
         try {
             const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
             const productList = await services.search_list(req.query.search, page);
@@ -37,26 +37,27 @@ module.exports = {
                 pages: pages
             });
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     },
 
-    filter: async (req, res) => {
+    filter: async (req, res, next) => {
+        const regex = /[.\-\ *+?^${}()|[\]\\]/g;
+        const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
+        const gender = (req.query.gender === undefined) ? '' : req.query.gender;
+        const type = (req.query.type === undefined) ? '' : req.query.type;
+        const brand = (req.query.brand === undefined) ? '' : req.query.brand;
+        let price = req.query.price.split(regex);
+        const min = price[1];
+        const max = price[price.length - 1];
+        const nameSort = (req.query.nameSort === undefined) ? 0 : parseInt(req.query.nameSort);
+        const priceSort = (req.query.priceSort === undefined) ? 0 : parseInt(req.query.priceSort);
+        
         try {
-            const regex = /[.\-\ *+?^${}()|[\]\\]/g;
-            const page = (!isNaN(req.query.page) && req.query.page > 0) ? parseInt(req.query.page) : 1;
-            const gender = (req.query.gender === undefined) ? '' : req.query.gender;
-            const type = (req.query.type === undefined) ? '' : req.query.type;
-            const brand = (req.query.brand === undefined) ? '' : req.query.brand;
-            let price = req.query.price.split(regex);
-            const min = price[1];
-            const max = price[price.length - 1];
-            const nameSort = (req.query.nameSort === undefined) ? 0 : parseInt(req.query.nameSort);
-            const priceSort = (req.query.priceSort === undefined) ? 0 : parseInt(req.query.priceSort);
-            const productList = await services.filter_list(gender, type, brand, min, max, nameSort , priceSort , page);
+            const productList = await services.filter_list(gender, type, brand, min, max, nameSort, priceSort, page);
             const countAll = await services.filterCount(gender, type, brand, min, max);
             const pages = Math.ceil(countAll / 9);
-            price=`%24${min}+-+%24${max}`
+            price = `%24${min}+-+%24${max}`
             res.render('./default/index', {
                 title: 'Search Results',
                 body: '../product/shop',
@@ -66,16 +67,16 @@ module.exports = {
                 pages: pages,
             });
         } catch (err) {
-
+            next(err);
         }
     },
 
-    product_detail: async (req, res) => {
+    product_detail: async (req, res, next) => {
         try {
             const idTarget = req.query.id;
             const targetProduct = await services.findSingleProduct(idTarget);
             /*find ramdom product by brand*/
-            const randomProducts = await services.findRandomProductByBrand(targetProduct._id,targetProduct.brand);
+            const randomProducts = await services.findRandomProductByBrand(targetProduct._id, targetProduct.brand);
             res.render('./default/index', {
                 title: 'Product Detail',
                 body: '../product/detail',
@@ -83,11 +84,11 @@ module.exports = {
                 randomProducts: randomProducts,
             });
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     },
 
-    rate: async (req, res) => {
+    rate: async (req, res, next) => {
         try {
             const {
                 productId,
@@ -99,11 +100,11 @@ module.exports = {
                 rating, content);
             res.status(201).json(comment);
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     },
 
-    getRatings: async (req, res) => {
+    getRatings: async (req, res, next) => {
         const productId = req.params.id;
         try {
             let perPage = 5;
@@ -117,7 +118,7 @@ module.exports = {
             }
             res.status(200).json(respone);
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     },
 };

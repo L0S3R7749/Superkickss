@@ -6,6 +6,12 @@ if (window.location.pathname.match('/product/detail')) {
         let itemId = $('input[name=productId]').val();
         let itemSize = parseInt($('select[id=product-size]').val());
         let itemQuantity = parseInt($('input[id=product-quantity]').val());
+        if (itemQuantity < 1) {
+            $('.amount-message-error').addClass('d-inline');
+            return;
+        } else {
+            $('.amount-message-error').addClass('d-none');
+        }
         $.ajax({
             url: '/cart/add',
             method: 'POST',
@@ -44,26 +50,34 @@ if (window.location.pathname.match('/cart')) {
                 productId,
                 productSize,
             },
-            success: function(data){
+            success: function (data) {
                 console.log(data);
                 location.reload();
                 //TODO: render ajax sau
             },
-            error: function(data){
+            error: function (data) {
                 console.log(data);
             }
         })
     })
 
     //update cart
-    $('.update-cart').on('click', e=>{
+    $('.update-cart').on('click', e => {
         e.preventDefault();
         let userId = $('input[name=userId').val();
-        let itemsId= document.querySelectorAll('input.id-items');
-        let itemsSize= document.querySelectorAll('.size-items');
-        let itemsQuantity= document.querySelectorAll('.quantity-items');
-        let id=[],size=[],quantity=[];
-        for(let i=0;i<itemsId.length;i++){
+        let itemsId = document.querySelectorAll('input.id-items');
+        let itemsSize = document.querySelectorAll('.size-items');
+        let itemsQuantity = document.querySelectorAll('.quantity-items');
+        let id = [],
+            size = [],
+            quantity = [];
+        for (let i = 0; i < itemsId.length; i++) {
+            if (itemsQuantity[i].value < 1) {
+                $('.amount-message-error').addClass('d-inline');
+                return;
+            } else {
+                $('.amount-message-error').addClass('d-none');
+            }
             id.push(itemsId[i].value);
             size.push(itemsSize[i].innerText);
             quantity.push(itemsQuantity[i].value);
@@ -71,19 +85,18 @@ if (window.location.pathname.match('/cart')) {
         $.ajax({
             url: '/cart/update',
             method: 'POST',
-            data:{
+            data: {
                 userId,
                 id: id,
                 size: size,
                 quantity: quantity,
             },
-            success: function(data){
+            success: function (data) {
                 location.reload();
             },
-            error: function(data){
+            error: function (data) {
 
             }
         })
     })
 }
-

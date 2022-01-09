@@ -148,8 +148,15 @@ module.exports = {
     },
 
     findRandomProductByBrand: (_id,brand) =>{
+        let myQuery={};
+        myQuery={
+            $and: [
+                {brand: brand},
+                {_id: {$ne: _id }}
+            ]
+        }
         return Product.aggregate([
-            {$match: {brand: brand} },
+            {$match: myQuery},
             {$sample: {size: 5} }
         ]);
     },

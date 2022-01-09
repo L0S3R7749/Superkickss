@@ -2,10 +2,12 @@ const services = require('./authServices');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const formidable = require('formidable');
-const {uploadImage} = require('../../middleware/cloudinary');
+const {
+    uploadImage
+} = require('../../middleware/cloudinary');
 
 module.exports = {
-    getLogin: (req, res, next) => {
+    getLogin: (req, res) => {
         res.render('./default/index', {
             title: 'Login',
             body: '../auth/login',
@@ -13,7 +15,7 @@ module.exports = {
         });
     },
 
-    info: (req, res, next) => {
+    info: (req, res) => {
         res.render('./default/index', {
             title: 'User info',
             body: '../auth/info',
@@ -21,7 +23,7 @@ module.exports = {
         });
     },
 
-    viewForgotPassword: (req, res, next) => {
+    viewForgotPassword: (req, res) => {
         res.render('./default/index', {
             title: 'Forgot password',
             body: '../auth/forgotpassword',
@@ -30,23 +32,27 @@ module.exports = {
     },
 
     forgotPassword: async (req, res, next) => {
-        const account = await services.findUserByEmail(req.body.email);
-        if (account) {
-            const token = jwt.sign({
-                account
-            }, process.env.PRIVATE_KEY, {
-                expiresIn: '10m'
-            });
-            services.sendResetPassword(req.body.email, token);
-            res.status(200);
-        } else {
-            res.status(400).json({
-                message: 'Cannot find this account'
-            });
+        try {
+            const account = await services.findUserByEmail(req.body.email);
+            if (account) {
+                const token = jwt.sign({
+                    account
+                }, process.env.PRIVATE_KEY, {
+                    expiresIn: '10m'
+                });
+                services.sendResetPassword(req.body.email, token);
+                res.status(200);
+            } else {
+                res.status(400).json({
+                    message: 'Cannot find this account'
+                });
+            }
+        } catch (err) {
+            next(err);
         }
     },
 
-    viewResetPassword: async (req, res, next) => {
+    viewResetPassword: async (req, res) => {
         const token = req.query.token;
         if (token) {
             res.render('./default/index', {
@@ -54,8 +60,6 @@ module.exports = {
                 body: '../auth/resetpassword',
                 message: req.flash('error'),
             });
-        } else {
-
         }
     },
 
@@ -82,7 +86,7 @@ module.exports = {
             if (token) {
                 const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
                 if (!decodedToken) {
-                    // throw { message: "Token validate fail", status: 500 };
+                    //TODO: add message
                     return;
                 }
                 const account = await services.resetPassword(decodedToken.account._id, hashPassword);
@@ -94,11 +98,11 @@ module.exports = {
                 }
             }
         } catch (err) {
-
+            next(err);
         }
     },
 
-    viewChangePassword: (req, res, next) => {
+    viewChangePassword: (req, res) => {
         res.render('./default/index', {
             title: 'Change password',
             body: '../auth/changepassword',
@@ -107,30 +111,34 @@ module.exports = {
     },
 
     changePassword: async (req, res, next) => {
-        const account = res.locals.user;
-        const currentPassword = req.body.currentPassword;
-        const newPassword = req.body.newPassword;
-        const confirmPassword = req.body.confirmPassword;
-        const regex = /[.\-\:><= *+?^${}()|[\]\\]/g;
-        const hashPassword = bcrypt.hashSync(newPassword, 10);
-        if (currentPassword.length == 0 || newPassword.length == 0 || confirmPassword.length == 0) {
-            req.flash('error', 'Please fill all field.');
-            res.redirect('/auth/change-password');
-        } else if (!bcrypt.compareSync(currentPassword, account.password)) {
-            req.flash('error', 'Your current password not correct');
-            res.redirect('/auth/change-password');
-        } else if (newPassword !== confirmPassword) {
-            req.flash('error', 'Your confirm password not correct');
-            res.redirect('/auth/change-password');
-        } else if (newPassword.length < 6 || newPassword.length > 16) {
-            req.flash('error', 'Your password must have at least 6 characters or no more than 16 characters');
-            res.redirect('/auth/change-password');
-        } else if (newPassword.match(regex)) {
-            req.flash('error', 'Your password must not have special characters');
-            res.redirect('/auth/change-password');
-        } else {
-            await services.changePassword(account._id, hashPassword);
-            res.redirect('/');
+        try {
+            const account = res.locals.user;
+            const currentPassword = req.body.currentPassword;
+            const newPassword = req.body.newPassword;
+            const confirmPassword = req.body.confirmPassword;
+            const regex = /[.\-\:><= *+?^${}()|[\]\\]/g;
+            const hashPassword = bcrypt.hashSync(newPassword, 10);
+            if (currentPassword.length == 0 || newPassword.length == 0 || confirmPassword.length == 0) {
+                req.flash('error', 'Please fill all field.');
+                res.redirect('/auth/change-password');
+            } else if (!bcrypt.compareSync(currentPassword, account.password)) {
+                req.flash('error', 'Your current password not correct');
+                res.redirect('/auth/change-password');
+            } else if (newPassword !== confirmPassword) {
+                req.flash('error', 'Your confirm password not correct');
+                res.redirect('/auth/change-password');
+            } else if (newPassword.length < 6 || newPassword.length > 16) {
+                req.flash('error', 'Your password must have at least 6 characters or no more than 16 characters');
+                res.redirect('/auth/change-password');
+            } else if (newPassword.match(regex)) {
+                req.flash('error', 'Your password must not have special characters');
+                res.redirect('/auth/change-password');
+            } else {
+                await services.changePassword(account._id, hashPassword);
+                res.redirect('/');
+            }
+        } catch (err) {
+            next(err);
         }
     },
 
@@ -141,9 +149,8 @@ module.exports = {
                 next(err);
                 return;
             }
-            // const result= await cloudinary.uploader.upload(files.avatar.filepath);
             const result = await uploadImage(files.avatar.filepath);
-            await services.changeAvatar(res.locals.user._id,result.url);
+            await services.changeAvatar(res.locals.user._id, result.url);
             res.redirect('/auth/info');
         });
     },
@@ -170,31 +177,34 @@ module.exports = {
             req.flash('error', 'Confirm-password does not match!');
             res.redirect('/auth/signup');
         } else {
-            const checkExist = await services.findUser(username, email, phone);
-
-            if (checkExist) {
-                req.flash('error', 'This user already exists!');
-                res.redirect('/auth/signup');
-            } else {
-                const hashpassword = bcrypt.hashSync(password, 10);
-                const account = await services.createUser({
-                    fullname,
-                    username,
-                    hashpassword,
-                    email,
-                    phone
-                });
-                const token = jwt.sign({
-                    account
-                }, process.env.PRIVATE_KEY, {
-                    expiresIn: '10m'
-                });
-                services.sendVerify(email, token);
-                res.render('./default/index', {
-                    title: 'Change password',
-                    body: '../auth/notification',
-                    message: 'Register successfully, check email to verify account',
-                });
+            try {
+                const checkExist = await services.findUser(username, email, phone);
+                if (checkExist) {
+                    req.flash('error', 'This user already exists!');
+                    res.redirect('/auth/signup');
+                } else {
+                    const hashpassword = bcrypt.hashSync(password, 10);
+                    const account = await services.createUser({
+                        fullname,
+                        username,
+                        hashpassword,
+                        email,
+                        phone
+                    });
+                    const token = jwt.sign({
+                        account
+                    }, process.env.PRIVATE_KEY, {
+                        expiresIn: '10m'
+                    });
+                    services.sendVerify(email, token);
+                    res.render('./default/index', {
+                        title: 'Change password',
+                        body: '../auth/notification',
+                        message: 'Register successfully, check email to verify account',
+                    });
+                }
+            } catch (err) {
+                next(err);
             }
         }
     },
@@ -206,21 +216,24 @@ module.exports = {
         if (token) {
             const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
             if (!decodedToken) {
-                // throw { message: "Token validate fail", status: 500 };
                 return;
             }
-            const account = await services.verify(decodedToken.account._id);
-            if (account) {
-                res.render('./default/index', {
-                    title: 'Change password',
-                    body: '../auth/notification',
-                    message: 'Verify successfully',
-                });
+            try {
+                const account = await services.verify(decodedToken.account._id);
+                if (account) {
+                    res.render('./default/index', {
+                        title: 'Change password',
+                        body: '../auth/notification',
+                        message: 'Verify successfully',
+                    });
+                }
+            } catch (err) {
+                next(err);
             }
         }
     },
 
-    logout: (req, res, next) => {
+    logout: (req, res) => {
         req.logOut();
         res.redirect('/');
     }
