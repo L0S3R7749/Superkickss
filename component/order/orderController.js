@@ -3,17 +3,22 @@ const cartService = require('../cart/cartService');
 
 module.exports = {
   checkout: async (req, res, next) => {
-    const targetCart = await cartService.getCartForOrder(res.locals.user._id);
-    let totalPrice = 0;
-    for (let i = 0; i < targetCart.items.length; i++) {
-      totalPrice += targetCart.items[i].itemId.price * targetCart.items[i].quantity;
+    try {
+      const targetCart = await cartService.getCartForOrder(res.locals.user._id);
+
+      let totalPrice = 0;
+      for (let i = 0; i < targetCart.items.length; i++) {
+        totalPrice += targetCart.items[i].itemId.price * targetCart.items[i].quantity;
+      }
+      res.render('./default/index', {
+        title: 'Checkout',
+        body: '../order/checkout',
+        cart: targetCart,
+        total: totalPrice,
+      });
+    } catch (err) {
+      next(err);
     }
-    res.render('./default/index', {
-      title: 'Checkout',
-      body: '../order/checkout',
-      cart: targetCart,
-      total: totalPrice,
-    });
   },
 
   create_order: async (req, res, next) => {
@@ -32,7 +37,7 @@ module.exports = {
           message: "Error create new Order"
         });
     } catch (err) {
-      console.log(err.message);
+      next(err);
     }
   },
 
@@ -44,25 +49,30 @@ module.exports = {
   },
 
   list: async (req, res, next) => {
-    const orders = await services.list(res.locals.user._id);
-    let createdDate = [];
-    for (let i = 0; i < orders.length; i++) {
-      let date = new Date(orders[i].createdDate);
-      createdDate.push(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+    try {
+      const orders = await services.list(res.locals.user._id);
+
+      let createdDate = [];
+      for (let i = 0; i < orders.length; i++) {
+        let date = new Date(orders[i].createdDate);
+        createdDate.push(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+      }
+      res.render('./default/index', {
+        title: 'Order list',
+        body: '../order/list',
+        orders: orders,
+        createdDate: createdDate
+      });
+    } catch (err) {
+      next(err);
     }
-    res.render('./default/index', {
-      title: 'Order list',
-      body: '../order/list',
-      orders: orders,
-      createdDate: createdDate
-    });
   },
 
   detail: async (req, res, next) => {
     try {
       const order = await services.detail(req.params.id);
       let date = new Date(order.createdDate);
-      let createdDate=date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+      let createdDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
       res.render('./default/index', {
         title: 'Order detail',
         body: '../order/detail',
@@ -70,13 +80,12 @@ module.exports = {
         createdDate: createdDate,
       });
     } catch (err) {
-      console.log(err);
+      next(err);
     }
   },
 
-  cancelOrder: async (req,res,next)=>{
-    console.log(req.body.orderId);
+  cancelOrder: async (req, res, next) => {
     await services.cancelOrder(req.body.orderId);
-    res.redirect('/order/detail/'+req.body.orderId);
+    res.redirect('/order/detail/' + req.body.orderId);
   },
 }

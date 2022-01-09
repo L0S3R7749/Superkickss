@@ -6,6 +6,7 @@ if (path.match('/order/checkout')) {
         let cartId = $('input[name=cart_id]').val();
         let totalPrice = parseInt($('input[name=totalPrice]').val());
         let shippingAddress;
+        //What is this code :D
         const targetCart = await getCartById();
 
         if ($('#c_ship_different_address').prop('checked') == true)

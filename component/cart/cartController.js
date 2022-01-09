@@ -3,26 +3,30 @@ const services = require('./cartService');
 module.exports = {
     cart: async (req, res, next) => {
         let user_id = req.user._id;
-        let cart = await services.getCart(user_id);
-        if (!cart || cart.items.length === 0) {
-            res.render('./default/index', {
-                title: 'Cart',
-                body: '../cart/emptyCart',
-            });
-        } else {
-            let total = 0;
-            for (let i = 0; i < cart.items.length; i++) {
-                total += cart.items[i].itemId.price * cart.items[i].quantity;
+        try {
+            let cart = await services.getCart(user_id);
+            if (!cart || cart.items.length === 0) {
+                res.render('./default/index', {
+                    title: 'Cart',
+                    body: '../cart/emptyCart',
+                });
+            } else {
+                let total = 0;
+                for (let i = 0; i < cart.items.length; i++) {
+                    total += cart.items[i].itemId.price * cart.items[i].quantity;
+                }
+                res.render('./default/index', {
+                    title: 'Cart',
+                    body: '../cart/cart',
+                    cart: cart,
+                    total: total,
+                });
             }
-            res.render('./default/index', {
-                title: 'Cart',
-                body: '../cart/cart',
-                cart: cart,
-                total: total,
-            });
-
+        } catch (err) {
+            next(err);
         }
     },
+
     add: async (req, res, next) => {
         let userId = req.body.userId;
         let itemId = req.body.itemId;
@@ -40,9 +44,10 @@ module.exports = {
                 return addCart;
             }
         } catch (err) {
-            console.log(err);
+            next(err);
         }
     },
+
     remove: async (req, res, next) => {
         let user_id = req.body.userId;
         let itemId = req.body.productId;
@@ -57,6 +62,7 @@ module.exports = {
             res.status(201).send(cart);
         }
     },
+
     update: async (req, res, next) => {
         let user_id = req.body.userId;
         let itemId = req.body['id[]'];
@@ -74,8 +80,12 @@ module.exports = {
                     quantity: quantity[i],
                 })
             }
-        }else{
-            items.push({itemId,itemSize,quantity});
+        } else {
+            items.push({
+                itemId,
+                itemSize,
+                quantity
+            });
         }
         const cart = await services.update(user_id, items);
         if (!cart) {
@@ -86,6 +96,7 @@ module.exports = {
             res.status(201).send(cart);
         }
     },
+
     getCartById: async (req, res, next) => {
         let cartId = req.params.id;
         const cart = await services.getCartById(cartId);
@@ -93,7 +104,8 @@ module.exports = {
             res.status(500).send({
                 message: 'error'
             });
-        else
+        else{
             res.status(200).send(cart);
+        }
     }
 };
