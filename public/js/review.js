@@ -56,7 +56,9 @@ if (window.location.pathname.match('/product/detail')) {
         let dateStr = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
         let html = `<div class="col-md-4 mb-4">
                 <div class="comment__user mb-4">
-                    <div class="comment__user-avatar"></div>
+                    <div class="comment__user-avatar">
+                    <img src="${rate.userId.avatar}" alt="">
+                    </div>
                     <div class="comment__user-name">
                         <h5 class="mb-0">${rate.userId.fullname}</h5>
                         <p class="mb-0">Đánh giá: ${rate.rating} sao</p>

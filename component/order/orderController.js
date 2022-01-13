@@ -5,7 +5,7 @@ module.exports = {
   checkout: async (req, res, next) => {
     try {
       const targetCart = await cartService.getCartForOrder(res.locals.user._id);
-
+      console.log(res.locals.user);
       let totalPrice = 0;
       for (let i = 0; i < targetCart.items.length; i++) {
         totalPrice += targetCart.items[i].itemId.price * targetCart.items[i].quantity;

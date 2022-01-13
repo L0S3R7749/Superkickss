@@ -17,14 +17,11 @@
             <div class="form-group row">
               <div class="col-md-12">
                 <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
-                <select class="form-control form-select" id="shippingAddressSelect" aria-label="Default select example">
-                  <% for (let i = 0; i < cart.user_id.addresses.length; i++) { %>
-                    <option value="<%= cart.user_id.addresses[i]%>"><%= cart.user_id.addresses[i]%></option>
-                  <% } %>
-                </select>
+                <input class="form-control" type="text" name="shippingAddress" id="" value="<%= locals.user.addresses[0]%>" required>
+                
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="c_ship_different_address" class="text-black" data-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> Ship To A Different Address?</label>
               <div class="collapse" id="ship_different_address">
                 <div class="py-2">
@@ -36,7 +33,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="c_paymethod" class="text-black">Payment Method</label>
               <select class="form-control form-select" name="paymentMethod" aria-label="Default select example">

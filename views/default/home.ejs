@@ -48,3 +48,23 @@
     </div>
   </div>
 </div>
+
+<div class="container mt-5">
+  <div class="row">
+    <% for (let i = 0; i < products.length; i++) { %>
+    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+      <div class="block-4 text-center border">
+        <figure class="block-4-image">
+          <a href="/product/detail?id=<%=products[i]._id%>"><img src="<%=products[i].images[0].url%>"
+              alt="Image placeholder" class="img-fluid"></a>
+        </figure>
+        <div class="block-4-text p-4">
+          <h3><a href="/product/detail?id=<%=products[i]._id%>" class="item-name"><%=products[i].name%></a></h3>
+          <!-- <p class="mb-0 item-desc"><%= products[i].description%></p> -->
+          <p class="text-primary font-weight-bold">$<%=products[i].price%></p>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
