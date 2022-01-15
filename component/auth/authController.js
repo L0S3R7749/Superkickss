@@ -142,6 +142,20 @@ module.exports = {
         }
     },
 
+    editInfo: async (req, res, next) => {
+        let _id = req.body.userId;
+        let fullname = req.body.fullname;
+        let address = req.body.address;
+        try {
+            let user = await services.editInfo(_id, fullname, address);
+            if(user){
+                res.redirect('/auth/info');
+            }
+        } catch (err) {
+            next(err);
+        }
+    },
+
     changeAvatar: async (req, res, next) => {
         const form = formidable({});
         form.parse(req, async (err, fields, files) => {

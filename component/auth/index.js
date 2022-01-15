@@ -28,6 +28,8 @@ router.get('/change-password',checkAuth.checkAuthentication, controller.viewChan
 
 router.post('/change-password',checkAuth.checkAuthentication, controller.changePassword);
 
+router.post('/edit-info',controller.editInfo);
+
 router.post('/change-avatar', controller.changeAvatar);
 
 router.get('/signup', controller.getSignup);

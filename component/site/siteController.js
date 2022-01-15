@@ -5,10 +5,12 @@ module.exports = {
             body: "../site/about",
         });
     },
+
     contact: (req, res, next) => {
         res.render('./default/index', {
             title: 'Contact',
             body: '../site/contact',
         });
     },
+    
 }
