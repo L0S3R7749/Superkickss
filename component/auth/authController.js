@@ -145,9 +145,10 @@ module.exports = {
     editInfo: async (req, res, next) => {
         let _id = req.body.userId;
         let fullname = req.body.fullname;
+        let phone = req.body.phone;
         let address = req.body.address;
         try {
-            let user = await services.editInfo(_id, fullname, address);
+            let user = await services.editInfo(_id, fullname, phone, address);
             if(user){
                 res.redirect('/auth/info');
             }

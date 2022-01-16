@@ -40,6 +40,22 @@ module.exports = {
                 price: priceSort,
             }
         }
+
+        let brandQuery = {};
+        if (brand === 'other') {
+            brandQuery = {
+                'brand': {
+                    $nin: ['Adidas', 'Nike', 'adidas', 'nike']
+                }
+            }
+        } else {
+            brandQuery = {
+                'brand': {
+                    $regex: brand,
+                    $options: 'i',
+                }
+            }
+        }
         
         let myQuery = {};
         myQuery = {
@@ -55,12 +71,7 @@ module.exports = {
                         $options: 'i',
                     }
                 },
-                {
-                    'brand': {
-                        $regex: brand,
-                        $options: 'i',
-                    }
-                },
+                brandQuery,
                 {
                     'price': {
                         $gte: min,
@@ -88,6 +99,22 @@ module.exports = {
 
     filterCount: (gender, type, brand, min, max) => {
         let myQuery={};
+        let brandQuery = {};
+        if (brand === 'other') {
+            brandQuery = {
+                'brand': {
+                    $nin: ['Adidas', 'Nike', 'adidas', 'nike']
+                }
+            }
+        } else {
+            brandQuery = {
+                'brand': {
+                    $regex: brand,
+                    $options: 'i',
+                }
+            }
+        }
+
         myQuery = {
             $and: [{
                     'category.gender': {
@@ -101,12 +128,7 @@ module.exports = {
                         $options: 'i',
                     }
                 },
-                {
-                    'brand': {
-                        $regex: brand,
-                        $options: 'i',
-                    }
-                },
+                brandQuery,
                 {
                     'price': {
                         $gte: min,
@@ -135,10 +157,17 @@ module.exports = {
         return comment;
     },
 
+    updateRate: (productId,rate)=>{
+        return Product.findByIdAndUpdate(productId, {
+            $set: {
+                rate: rate
+            }
+        });
+    },
+
     getRating: async (productId, page, perPage = 5) => {
         let product = await Product.findById(productId)
             .populate('comments.userId');
-
         let comments = product.comments.slice(perPage * page - perPage, perPage * page);
         const respone = {
             allComment: product.comments,

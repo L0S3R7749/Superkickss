@@ -52,7 +52,7 @@ module.exports = {
         const max = price[price.length - 1];
         const nameSort = (req.query.nameSort === undefined) ? 0 : parseInt(req.query.nameSort);
         const priceSort = (req.query.priceSort === undefined) ? 0 : parseInt(req.query.priceSort);
-        
+
         try {
             const productList = await services.filter_list(gender, type, brand, min, max, nameSort, priceSort, page);
             const countAll = await services.filterCount(gender, type, brand, min, max);
@@ -98,7 +98,20 @@ module.exports = {
             } = req.body;
             const comment = await services.rating(productId, userId,
                 rating, content);
-            res.status(201).json(comment);
+            const product = await services.findSingleProduct(productId);
+            let rate = parseInt(rating);
+            let len = product.comments.length;
+            for (let i = 0; i < len; i++) {
+                rate += product.comments[i].rating;
+            }
+            rate = rate / (len + 1);
+            rate = (Math.round(rate * 100) / 100).toFixed(1);
+            await services.updateRate(productId, rate);
+            let response = {
+                comment,
+                rate
+            }
+            res.status(201).json(response);
         } catch (err) {
             next(err);
         }

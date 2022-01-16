@@ -9,9 +9,7 @@ if (window.location.pathname.match('/product/detail')) {
         let userId = $('input[name=userId]').val();
         let rating = parseInt($("input[type=radio][name=rating]:checked").val());
         let content = $('textarea[name=content]').val();
-        console.log(rating);
-        console.log(content);
-        if(isNaN(rating)){
+        if (isNaN(rating)) {
             jQuery.noConflict();
             $('#reivewNotiModal').modal('show');
             return;
@@ -26,7 +24,9 @@ if (window.location.pathname.match('/product/detail')) {
                 content,
             },
             success: function (data) {
-                console.log(data);
+                $('.product-rate').empty();
+                let html = `Rate: ${data.rate}/5.0`;
+                $('.product-rate').append(html);
                 loadRatings();
             }
         })
@@ -91,24 +91,22 @@ if (window.location.pathname.match('/product/detail')) {
         //event click
         $(document).on('click', 'ul.pagination li', e => {
             let value = e.target.text;
-            if (!value) {
-                if (value.includes('left')) {
-                    const curentPage = $("li.active");
-                    const page = Number.parseInt(curentPage.text());
-                    if (page > 1) {
-                        loadRatings(page - 1);
-                        $("li.active").removeClass("active");
-                        curentPage.prev().addClass('active');
-                    }
-                } else {
-                    const totalPages = $("ul.pagination li").length - 2;
-                    const curentPage = $("li.active");
-                    const page = Number.parseInt(curentPage.text());
-                    if (page < totalPages) {
-                        loadRatings(page + 1);
-                        $("li.active").removeClass("active");
-                        curentPage.next().addClass('active');
-                    }
+            if (value == '<') {
+                const curentPage = $("li.active");
+                const page = Number.parseInt(curentPage.text());
+                if (page > 1) {
+                    loadRatings(page - 1);
+                    $("li.active").removeClass("active");
+                    curentPage.prev().addClass('active');
+                }
+            } else if (value == '>') {
+                const totalPages = $("ul.pagination li").length - 2;
+                const curentPage = $("li.active");
+                const page = Number.parseInt(curentPage.text());
+                if (page < totalPages) {
+                    loadRatings(page + 1);
+                    $("li.active").removeClass("active");
+                    curentPage.next().addClass('active');
                 }
             } else {
                 loadRatings(value);

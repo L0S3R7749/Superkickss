@@ -15,6 +15,11 @@ const productSchema = new mongoose.Schema({
     min: 0,
     max: 999999999
   },
+  rate: {
+    type: mongoose.Schema.Types.Decimal128,
+    required: true,
+    default: 5.0
+  },
   description: {
     type: String,
     required: true,
