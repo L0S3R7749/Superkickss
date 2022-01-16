@@ -41,7 +41,7 @@ module.exports = {
                     expiresIn: '10m'
                 });
                 services.sendResetPassword(req.body.email, token);
-                res.status(200);
+                res.status(200).json({message: 'Check your mail to get link reset password'});
             } else {
                 res.status(400).json({
                     message: 'Cannot find this account'
@@ -208,9 +208,7 @@ module.exports = {
                     });
                     const token = jwt.sign({
                         account
-                    }, process.env.PRIVATE_KEY, {
-                        expiresIn: '10m'
-                    });
+                    }, process.env.PRIVATE_KEY);
                     services.sendVerify(email, token);
                     res.render('./default/index', {
                         title: 'Change password',

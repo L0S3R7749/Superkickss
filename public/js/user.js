@@ -9,15 +9,20 @@ if (window.location.pathname.match('/auth/forgot-password')){
                 email,
             },
             success: function(data){
-                $('.error').empty();
+                $('.forgot-password-message').empty();
+                let html= `<div class="success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span>${data.message}</span>
+                        </div>`
+                $('.forgot-password-message').append(html);
             },
             error: function(data){
-                $('.error').empty();
+                $('.forgot-password-message').empty();
                 let html= `<div class="error">
                             <i class="fas fa-times-circle me-2"></i>
                             <span>${data.responseJSON.message}</span>
                         </div>`
-                $('.error').append(html);
+                $('.forgot-password-message').append(html);
             }
         })
     })

@@ -1105,6 +1105,13 @@ a:hover {
   padding: 0.5rem;
 }
 
+.success{
+  border: 1px solid #001cb8;
+  color: #001cb8;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+
 .item-name,
 .item-desc {
   overflow: hidden;
@@ -1334,6 +1341,10 @@ a:hover {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.forgot-password-message{
+  padding: 0px;
 }
 
 .error-content{
