@@ -13,42 +13,45 @@
           <h2 class="h3 mb-3 text-black">Get In Touch</h2>
         </div>
         <div class="col-md-7">
-
           <form method="post">
-            
-            <div class="p-3 p-lg-5 border">
+            <div class="p-3 mb-5 p-lg-5 border">
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_fname" name="c_fname">
+                  <input type="text" class="form-control" id="c_fname" name="c_fname" required>
                 </div>
                 <div class="col-md-6">
                   <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_lname" name="c_lname">
+                  <input type="text" class="form-control" id="c_lname" name="c_lname" required>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-md-12">
                   <label for="c_email" class="text-black">Email <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" id="c_email" name="c_email" placeholder="">
+                  <input type="email" class="form-control" id="c_email" name="c_email" placeholder="" required>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-md-12">
-                  <label for="c_subject" class="text-black">Subject </label>
-                  <input type="text" class="form-control" id="c_subject" name="c_subject">
+                  <label for="c_title" class="text-black">Title </label>
+                  <input type="text" class="form-control" id="c_title" name="c_title" required>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-12">
                   <label for="c_message" class="text-black">Message </label>
-                  <textarea name="c_message" id="c_message" cols="30" rows="7" class="form-control"></textarea>
+                  <textarea name="c_message" id="c_message" cols="30" rows="7" class="form-control" required></textarea>
                 </div>
               </div>
               <div class="form-group row">
+                
                 <div class="col-lg-12">
-                  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Send Message">
+                  <div class="col-lg-12 mb-3 forgot-password-message">
+
+                  </div>
+                  <!-- <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-contact" value="Send Message">Send Message</button> -->
+                  <input type="submit" class="btn btn-primary btn-lg btn-block" id="submit-contact" value="Send Message">
                 </div>
               </div>
             </div>
@@ -57,7 +60,7 @@
         <div class="col-md-5 ml-auto">
           <div class="p-4 border mb-3">
             <span class="d-block text-primary h6 text-uppercase">Ho Chi Minh City</span>
-            <p class="mb-0">Nhà của ba gà ở đâu tôi không biết</p>
+            <p class="mb-0">227, Nguyễn Văn Cừ, Phường 4, Quận 5</p>
           </div>
 
         </div>

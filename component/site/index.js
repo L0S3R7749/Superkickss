@@ -4,6 +4,6 @@ const controller = require('./siteController');
 
 router.get('/about',controller.about);
 router.get('/contact',controller.contact);
-// router.post('/contact',controller.)
+router.post('/contact',controller.sendContact);
 
 module.exports = router;
