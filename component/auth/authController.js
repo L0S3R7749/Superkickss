@@ -38,10 +38,10 @@ module.exports = {
                 const token = jwt.sign({
                     account
                 }, process.env.PRIVATE_KEY, {
-                    expiresIn: '10m'
+                    expiresIn: '5m'
                 });
                 services.sendResetPassword(req.body.email, token);
-                res.status(200).json({message: 'Check your mail to get link reset password'});
+                res.status(200).json({message: 'Check your mail to get link reset password, it will be expire after 5 minutes'});
             } else {
                 res.status(400).json({
                     message: 'Cannot find this account'
@@ -91,10 +91,7 @@ module.exports = {
                 }
                 const account = await services.resetPassword(decodedToken.account._id, hashPassword);
                 if (account) {
-                    res.render('./default/index', {
-                        title: 'Login',
-                        body: '../auth/login',
-                    });
+                    res.redirect('/auth/login');
                 }
             }
         } catch (err) {

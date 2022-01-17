@@ -64,7 +64,7 @@ module.exports = {
             from: 'Email',
             to: email,
             subject: 'RESET YOUR PASSWORD',
-            text: `Click this link to reset your password: ${url}`,
+            text: `Click this link to reset your password (expire after 5 minutes): ${url}`,
             html: html,
         }
         transport.sendMail(mailOptions, function (error, info) {
