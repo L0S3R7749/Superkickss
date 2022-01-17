@@ -1395,3 +1395,17 @@ a:hover {
   display: none;
   color:#ff0000;
 }
+
+.review-title{
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.team-avatar img{
+  width: 120px;
+  height: 120px;
+}
+
+.product-items img{
+  height: 10%;
+}
