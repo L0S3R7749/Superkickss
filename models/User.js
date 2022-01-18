@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
     }, 
-    addresses: [{
+    addresses: {
         type: String,
         required: true,
-    }],
+    },
     userRight: {
         type: String,
         required: true,
