@@ -153,7 +153,7 @@ jQuery(document).ready(function($) {
       range: true,
       min: 0,
       max: 150,
-      values: [ 0, 150 ],
+      values: [ 0, 1000 ],
       slide: function( event, ui ) {
         $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
       }
