@@ -137,11 +137,10 @@ module.exports = {
         });
     },
 
-    editInfo: (_id, fullname,phone, addresses) => {
+    editInfo: (_id, fullname, addresses) => {
         return User.findByIdAndUpdate(_id, {
             $set: {
                 fullname: fullname,
-                phoneNumber: phone,
                 addresses: addresses
             }
         });

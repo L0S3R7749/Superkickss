@@ -1,7 +1,7 @@
 <% for (let i = 0 ; i < orders.length ; i++) { %>
 <tr class="order-data" data-id="<%= orders[i]._id%>">
     <!-- <input type="hidden" name="order-id" class="order-id" value="<%= orders[i]._id%>"> -->
-    <td class="order-item-address">300, Phan Huy Ích, Phường 15, Quận Bình Tân, HCM</td>
+    <td class="order-item-address"><%= orders[i].user_id.addresses%></td>
     <td class="order-item-status">
         <% if (orders[i].status === "in progress") { %>
             <span class="in-progress">
