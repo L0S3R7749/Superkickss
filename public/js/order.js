@@ -5,14 +5,7 @@ if (path.match('/order/checkout')) {
         e.preventDefault();
         let cartId = $('input[name=cart_id]').val();
         let totalPrice = parseInt($('input[name=totalPrice]').val());
-        let shippingAddress;
-        //What is this code :D
-        const targetCart = await getCartById();
-
-        if ($('#c_ship_different_address').prop('checked') == true)
-            shippingAddress = $('input[name=diff_shippingAddress]').val();
-        else
-            shippingAddress = $('#shippingAddressSelect').val();
+        let shippingAddress = $('input[name=shippingAddress]').val();;
 
         $.ajax({
             url: '/order/checkout',
